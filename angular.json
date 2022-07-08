@@ -31,7 +31,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/primeng/resources/themes/mdc-light-deeppurple/theme.css",
+              "src/app/shared/bootstrap/bootstrap.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "src/app/shared/styles/styles.scss"
             ],
             "scripts": []
           },
