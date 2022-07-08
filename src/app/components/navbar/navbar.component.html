@@ -1,1 +1,8 @@
-<p-menubar [model]="items"></p-menubar>
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+      <img src="assets/learnerize-logo.png" height="50" class="mr-2">
+  </ng-template>
+  <ng-template pTemplate="end">
+      <input type="text" pInputText placeholder="Buscar cursos" class="hide-sm">
+  </ng-template>
+</p-menubar>
