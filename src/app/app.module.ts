@@ -14,7 +14,6 @@ import { PrimengModule } from './shared/primeng/primeng.module';
 
 // Pages
 import { AuthComponent } from './pages/auth/auth.component';
-import { LoginComponent } from './pages/login/login.component';
 import { environment } from 'src/environments/environment';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
@@ -23,7 +22,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     AuthComponent,
     NavbarComponent
   ],
