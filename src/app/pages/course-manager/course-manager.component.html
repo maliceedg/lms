@@ -1,0 +1,210 @@
+<div class="banner relative">
+  <h1 class="course-title fw-bold">
+    Administrador de Cursos
+  </h1>
+</div>
+
+<div class="bg-gray p-5 d-flex flex-column">
+  <div class="button-group shadow my-3 mx-auto">
+    <button type="button" class="button-selector" (click)="viewToggle('view'); getCourses()"
+      [ngClass]="{'disabled': view == 'create'}">Ver</button>
+    <button type="button" class="button-selector" (click)="viewToggle('create')"
+      [ngClass]="{'disabled': view == 'view'}">Crear</button>
+  </div>
+  <div class="container">
+
+    <div *ngIf="view == 'view'">
+      <div *ngFor="let course of courses" class="course-card rounded shadow bg-white d-flex overflow-hidden mb-4 w-100">
+        <img class="course-img" [src]="'https://picsum.photos/200?id=' + course.id" alt="">
+        <div class="p-3 course-content">
+          <span class="text-base">
+            {{course?.category}}
+          </span>
+
+          <div class="w-100 d-flex align-items-center justify-content-between">
+            <!-- Title -->
+            <h4>
+              {{course?.name}}
+            </h4>
+
+            <button pButton pRipple type="button" label="" icon="pi pi-pencil"
+              class="p-button-outlined p-button-sm rounded" (click)="showDialog(course)"></button>
+          </div>
+
+          <!-- Course details -->
+          <div class="d-flex flex-wrap">
+            <!-- Rating -->
+            <div class="d-flex align-items-center">
+              <span>{{course?.rating}}</span>
+              <p-rating [(ngModel)]="course.rating" [readonly]="true" [cancel]="false"></p-rating>
+            </div>
+
+            <!-- Students -->
+            <div class="d-flex align-items-center ms-3">
+              <span>{{course?.members}} ests.</span>
+            </div>
+
+            <!-- Teacher -->
+            <div class="d-flex align-items-center ms-3">
+              <span class="fw-bold">Por {{course?.author}}</span>
+            </div>
+
+            <a [routerLink]="'/courses/detail/'" class="w-100 d-flex">
+              <button pButton pRipple type="button" label="Ver detalles"
+                class="p-button-outlined mt-3 px-5 mx-auto"></button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="view == 'create'" class="card shadow py-3 px-4">
+      <div class="form-group">
+        <h4 class="mb-3">Información básica</h4>
+
+        <form [formGroup]="courseForm" (ngSubmit)="uploadCourse()">
+          <div class="d-flex flex-column">
+            <h5>Nombre del curso</h5>
+            <div class="p-inputgroup d-flex w-100">
+              <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+              <input type="text" formControlName="name" pInputText
+                placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos" class="w-100">
+            </div>
+          </div>
+
+          <div class="d-flex flex-column mt-3">
+            <h5>Descripción del curso</h5>
+            <div class="p-inputgroup d-flex w-100">
+              <textarea rows="5" cols="30" formControlName="description" pInputTextarea class="w-100"></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex flex-wrap justify-content-between mt-3">
+            <div class="category-selector">
+              <h5>Categoria</h5>
+              <div class="p-inputgroup d-flex w-50">
+                <p-dropdown [options]="categories" formControlName="category" optionLabel="name" optionValue="value"
+                  (onChange)="getSubcategories($event)" [autoDisplayFirst]="false" placeholder="Categoría">
+                </p-dropdown>
+
+              </div>
+            </div>
+
+            <div class="category-selector">
+              <h5>Subcategoria</h5>
+              <div class="p-inputgroup d-flex w-50">
+                <p-dropdown [options]="subcategories" formControlName="subcategory" optionLabel="name"
+                  optionValue="value" [autoDisplayFirst]="false" placeholder="Subcategoría"
+                  emptyMessage="No se encontraron subcategorías">
+                </p-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lessons -->
+          <div class="d-flex justify-content-between mt-4">
+            <h3>Lecciones</h3>
+            <div>
+              <button pButton pRipple type="button" icon="pi pi-plus" class="rounded" (click)="addLesson()"></button>
+            </div>
+          </div>
+
+          <div formArrayName="lessons">
+            <div *ngFor="let lesson of lessons().controls; let i = index" [formGroupName]="i"
+              class="mt-2 d-flex justify-content-between align-items-end">
+
+              <div class="d-flex flex-wrap justify-content-between w-100">
+                <div class="d-flex flex-column lesson-media">
+                  <h5>Nombre de la lección {{i + 1}}</h5>
+                  <div class="p-inputgroup d-flex w-100">
+                    <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+                    <input type="text" formControlName="name" pInputText placeholder="Ej. Derivadas simples">
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column lesson-media">
+                  <h5>URL de la lección {{i + 1}}</h5>
+                  <div class="p-inputgroup d-flex w-100">
+                    <span class="p-inputgroup-addon"><i class="pi pi-link"></i></span>
+                    <input type="text" formControlName="url" pInputText
+                      placeholder="Ej. https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                  </div>
+                </div>
+              </div>
+
+              <button pButton pRipple type="button" icon="pi pi-minus"
+                class="rounded p-button-outlined p-button-danger h-100 mb-1" (click)="removeLesson(i)"></button>
+
+            </div>
+          </div>
+
+          <div class="w-100 mt-3 d-flex justify-content-center">
+            <button pButton pRipple type="submit" icon="pi pi-check" label="Enviar" class="rounded me-2"></button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Editar Cursos" [(visible)]="display" [modal]="true" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+
+  <form [formGroup]="editCourseForm" (ngSubmit)="uploadCourse()">
+    <div class="d-flex flex-column">
+      <h5>Nombre del curso</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+        <input type="text" formControlName="name" pInputText
+          placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos" class="w-100">
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3">
+      <h5>Descripción del curso</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <textarea rows="5" cols="30" formControlName="description" pInputTextarea class="w-100"></textarea>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between mt-3">
+      <div class="category-selector">
+        <h5>Categoria</h5>
+        <div class="p-inputgroup d-flex w-50">
+          <p-dropdown [options]="categories" formControlName="category" optionLabel="name" optionValue="value"
+            (onChange)="getSubcategories($event)" [autoDisplayFirst]="false" placeholder="Categoría">
+          </p-dropdown>
+
+        </div>
+      </div>
+
+      <div class="category-selector">
+        <h5>Subcategoria</h5>
+        <div class="p-inputgroup d-flex w-50">
+          <p-dropdown [options]="subcategories" formControlName="subcategory" optionLabel="name" optionValue="value"
+            [autoDisplayFirst]="false" placeholder="Subcategoría" emptyMessage="No se encontraron subcategorías">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lessons -->
+    <div class="d-flex justify-content-between mt-4">
+      <h3>Lecciones</h3>
+      <div>
+        <button pButton pRipple type="button" icon="pi pi-plus" class="rounded" (click)="addLesson()"></button>
+      </div>
+    </div>
+
+    <div>
+      <app-edit-lessons formControlName="lessons"></app-edit-lessons>
+    </div>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" type="button" (click)="display=false; paVe()" label="Editar Cursos"
+      styleClass="p-button-text p-button-success"></p-button>
+  </ng-template>
+</p-dialog>
