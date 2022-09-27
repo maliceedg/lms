@@ -67,6 +67,29 @@
 }
 
 /* Utilities */
+
+/* Text */
 .text-base {
     color: #aaa !important;
+}
+
+.text-primary {
+    color: #a7e4dc !important;
+}
+
+.text-accent {
+    color: #a87fb9 !important;
+}
+
+.bg-primary {
+    background-color: #a7e4dc !important;
+}
+
+.bg-accent {
+    background-color: #a87fb9 !important;
+}
+
+/* Background */
+.bg-gray {
+    background-color: #e7e7e7;
 }
