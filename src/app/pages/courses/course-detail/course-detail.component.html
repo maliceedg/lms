@@ -1,0 +1,29 @@
+<div [ngClass]="{'course-banner-1': bg == 1, 'course-banner-2': bg == 2, 'course-banner-3': bg == 3}">
+  <div class="container d-flex h-100">
+
+    <div class="h-auto d-flex w-100 justify-content-center align-items-center flex-wrap p-3">
+      <!-- Course Img -->
+      <div class="col-md-4 col-sm-12 course-img d-flex align-items-center">
+        <img [src]="course.img + '?' + course.id" [alt]="course.name" class="rounded shadow">
+      </div>
+
+      <!-- Course Details -->
+      <div class="col-md-7 col-sm-12 course-details bg-white rounded shadow p-3">
+        <div class="d-flex flex-column">
+          <h3>{{course.name}}</h3>
+          <i class="fw-bold">Por {{course.teacher | titlecase}}</i>
+          <p class="mt-2 course-description">{{course.description}}</p>
+          <div class="d-flex align-items-center">
+            <div class="d-flex flex-wrap align-items-center me-4">
+              <span class="me-1">{{course.rating}}</span>
+              <p-rating [(ngModel)]="course.rating" [readonly]="true" [cancel]="false"></p-rating>
+            </div>
+            <span class="course-price text-accent">{{course.price}}</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

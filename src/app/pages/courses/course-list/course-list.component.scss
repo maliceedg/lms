@@ -1,0 +1,153 @@
+@import "../../../shared/styles/_variables.scss";
+
+/* Dataview customization */
+::ng-deep .p-dataview .p-dataview-content,
+::ng-deep .p-dataview .p-dataview-header {
+  padding: 0;
+  background: transparent;
+}
+
+::ng-deep .p-grid.p-nogutter.grid.grid-nogutter {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: $sm) {
+    display: block;
+  }
+}
+
+.course-banner {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='200' preserveAspectRatio='none' viewBox='0 0 1920 200'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1002%26quot%3b)' fill='none'%3e%3crect width='1920' height='200' x='0' y='0' fill='rgba(167%2c 228%2c 220%2c 0.28)'%3e%3c/rect%3e%3cpath d='M1159.13 210.42C1292.27 210.09 1418.3 120.82 1683.99 120.31 1949.69 119.8 2076.28 44.51 2208.86 44.31' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M877.38 205.74C976.62 202.84 968.37 55.01 1244.76 54.94 1521.14 54.87 1795.13 118.88 1979.51 118.94' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M1052.7 202.77C1201.38 202.42 1345.75 103.85 1639.15 103.84 1932.55 103.83 2078.27 161.77 2225.6 161.84' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M716.3 223.97C881.53 222.86 1036.52 67.98 1358.53 67.91 1680.55 67.84 1839.51 127.84 2000.77 127.91' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M443.08 237.49C672.5 237.3 896.97 129.7 1354.37 129.55 1811.77 129.4 2037.47 77.57 2265.66 77.55' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1002'%3e%3crect width='1920' height='200' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  height: 200px;
+  background-size: cover;
+}
+
+.course-title {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  transform: translate(0, -50%);
+  //font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.course-list {
+  background-color: #e7e7e7;
+}
+
+.course-content {
+  width: 60%;
+
+  @media screen and (max-width: $sm) {
+    width: 100% !important;
+  }
+}
+
+.grid-card {
+  margin-left: 1rem;
+  width: 200px;
+
+  @media screen and (max-width: $sm) {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .course-name {
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: initial;
+  }
+
+  ::ng-deep .p-rating .p-rating-icon.pi-star-fill,
+  ::ng-deep .p-rating .p-rating-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .grid-card-content {
+    height: 260px;
+  }
+}
+
+.course-img {
+  width: 270px;
+  background: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
+
+  @media screen and (max-width: $sm) {
+    width: 100% !important;
+  }
+}
+
+.course-name {
+  width: 85%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  @media screen and (max-width: $sm) {
+    width: 250px !important;
+    text-overflow: initial;
+    overflow: auto;
+    white-space: initial;
+  }
+}
+
+/* SVG Animation */
+@keyframes float1 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-10px, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.triangle-float1 {
+  animation: float1 5s infinite;
+}
+
+@keyframes float2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-5px, -5px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.triangle-float2 {
+  animation: float2 4s infinite;
+}
+
+@keyframes float3 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(0, -10px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.triangle-float3 {
+  animation: float3 6s infinite;
+}

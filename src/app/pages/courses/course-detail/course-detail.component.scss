@@ -1,0 +1,45 @@
+@import "../../../shared/styles/_variables.scss";
+
+.course-banner-1 {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='400' preserveAspectRatio='none' viewBox='0 0 1920 400'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1002%26quot%3b)' fill='none'%3e%3crect width='1920' height='400' x='0' y='0' fill='rgba(167%2c 228%2c 220%2c 0.28)'%3e%3c/rect%3e%3cpath d='M -39.504656459996795%2c290 C 88.5%2c240 344.5%2c49.8 600.4953435400032%2c40 C 856.5%2c30.2 984.5%2c227 1240.4953435400032%2c241 C 1496.5%2c255 1624.5%2c115 1880.4953435400032%2c110 C 2136.5%2c105 2512.59%2c202.4 2520.495343540003%2c216 C 2528.4%2c229.6 2040.1%2c185.6 1920%2c178' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -29.83853938363734%2c100 C 98.16%2c144.8 354.16%2c331.6 610.1614606163627%2c324 C 866.16%2c316.4 994.16%2c67.6 1250.1614606163625%2c62 C 1506.16%2c56.4 1634.16%2c291.2 1890.1614606163625%2c296 C 2146.16%2c300.8 2524.19%2c102.6 2530.1614606163625%2c86 C 2536.13%2c69.4 2042.03%2c187.6 1920%2c213' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -522.8737495342241%2c41 C -394.87%2c77.8 -138.87%2c194.4 117.12625046577585%2c225 C 373.13%2c255.6 501.13%2c186.4 757.1262504657759%2c194 C 1013.13%2c201.6 1141.13%2c275 1397.126250465776%2c263 C 1653.13%2c251 1932.55%2c126.2 2037.126250465776%2c134 C 2141.7%2c141.8 1943.43%2c268.4 1920%2c302' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -55.584768275038186%2c276 C 72.42%2c247.4 328.42%2c133.4 584.4152317249618%2c133 C 840.42%2c132.6 968.42%2c261.2 1224.4152317249618%2c274 C 1480.42%2c286.8 1608.42%2c204.8 1864.4152317249618%2c197 C 2120.42%2c189.2 2493.3%2c252 2504.415231724962%2c235 C 2515.53%2c218 2036.88%2c136.6 1920%2c112' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1002'%3e%3crect width='1920' height='400' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  height: 400px;
+  width: 100%;
+}
+
+.course-banner-2 {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='400' preserveAspectRatio='none' viewBox='0 0 1920 400'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1003%26quot%3b)' fill='none'%3e%3crect width='1920' height='400' x='0' y='0' fill='rgba(167%2c 228%2c 220%2c 0.28)'%3e%3c/rect%3e%3cpath d='M -299.7537175772736%2c267 C -171.75%2c241.4 84.25%2c136.2 340.2462824227264%2c139 C 596.25%2c141.8 724.25%2c286.2 980.2462824227264%2c281 C 1236.25%2c275.8 1364.25%2c105 1620.2462824227264%2c113 C 1876.25%2c121 2200.3%2c306 2260.2462824227264%2c321 C 2320.2%2c336 1988.05%2c214.6 1920%2c188' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -435.7903298741729%2c203 C -307.79%2c179 -51.79%2c62 204.20967012582707%2c83 C 460.21%2c104 588.21%2c287 844.2096701258271%2c308 C 1100.21%2c329 1228.21%2c198.8 1484.209670125827%2c188 C 1740.21%2c177.2 2037.05%2c252.4 2124.209670125827%2c254 C 2211.37%2c255.6 1960.84%2c207.6 1920%2c196' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -324.9594878073167%2c268 C -196.96%2c247.6 59.04%2c163.6 315.0405121926833%2c166 C 571.04%2c168.4 699.04%2c280.8 955.0405121926833%2c280 C 1211.04%2c279.2 1339.04%2c147.4 1595.0405121926833%2c162 C 1851.04%2c176.6 2170.05%2c346.4 2235.0405121926833%2c353 C 2300.03%2c359.6 1983.01%2c226.6 1920%2c195' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -1059.435980118117%2c283 C -931.44%2c250 -675.44%2c102.6 -419.435980118117%2c118 C -163.44%2c133.4 -35.44%2c354.6 220.56401988188298%2c360 C 476.56%2c365.4 604.56%2c147.4 860.564019881883%2c145 C 1116.56%2c142.6 1288.68%2c349 1500.564019881883%2c348 C 1712.45%2c347 1836.11%2c181.6 1920%2c140' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1003'%3e%3crect width='1920' height='400' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  height: 400px;
+  width: 100%;
+}
+
+.course-banner-3 {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='400' preserveAspectRatio='none' viewBox='0 0 1920 400'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1004%26quot%3b)' fill='none'%3e%3crect width='1920' height='400' x='0' y='0' fill='rgba(167%2c 228%2c 220%2c 0.28)'%3e%3c/rect%3e%3cpath d='M -298.09097124472646%2c52 C -170.09%2c86.4 85.91%2c198.2 341.90902875527354%2c224 C 597.91%2c249.8 725.91%2c161.4 981.9090287552735%2c181 C 1237.91%2c200.6 1365.91%2c326.8 1621.9090287552735%2c322 C 1877.91%2c317.2 2202.29%2c176.4 2261.9090287552735%2c157 C 2321.53%2c137.6 1988.38%2c211.4 1920%2c225' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -45.635960979116135%2c64 C 82.36%2c98.8 338.36%2c215.6 594.3640390208839%2c238 C 850.36%2c260.4 978.36%2c183.2 1234.3640390208839%2c176 C 1490.36%2c168.8 1618.36%2c202.4 1874.3640390208839%2c202 C 2130.36%2c201.6 2505.24%2c146 2514.364039020884%2c174 C 2523.49%2c202 2038.87%2c308.4 1920%2c342' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -1176.8130256148684%2c131 C -1048.81%2c171 -792.81%2c343.4 -536.8130256148684%2c331 C -280.81%2c318.6 -152.81%2c91.6 103.18697438513163%2c69 C 359.19%2c46.4 487.19%2c216.6 743.1869743851316%2c218 C 999.19%2c219.4 1147.82%2c79 1383.1869743851316%2c76 C 1618.55%2c73 1812.64%2c177.6 1920%2c203' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -513.8116665901998%2c322 C -385.81%2c285.2 -129.81%2c130.8 126.18833340980018%2c138 C 382.19%2c145.2 510.19%2c370 766.1883334098002%2c358 C 1022.19%2c346 1150.19%2c84.2 1406.1883334098002%2c78 C 1662.19%2c71.8 1943.43%2c325.8 2046.1883334098002%2c327 C 2148.95%2c328.2 1945.24%2c132.6 1920%2c84' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1004'%3e%3crect width='1920' height='400' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  height: 400px;
+  width: 100%;
+}
+
+.course-img img {
+  width: 100%;
+
+  @media screen and (max-width: $sm) {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.course-details {
+  margin-left: 2rem;
+
+  @media screen and (max-width: $sm) {
+    margin-left: 0;
+  }
+
+  .course-price {
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+
+  .course-description::first-letter {
+    text-transform: capitalize;
+  }
+}
