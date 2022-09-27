@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import firebase from 'firebase/compat/app';
+import { map, Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  id: string;
+  token: string;
+  
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -40,7 +45,20 @@ export class AuthService {
   }
 
   getLoggedUser() {
+    this.angularFireAuth.authState.subscribe(user => {
+      if (user) {
+        localStorage.setItem('id', user.uid);        
+      }
+    })
     return this.angularFireAuth.authState;
+  }
+
+  getUserId(): string {
+    return localStorage.getItem('id');
+  }
+
+  checkToken(): boolean {
+    return this.token ? true : localStorage.getItem('token') ? true : false
   }
 
   logout() {
