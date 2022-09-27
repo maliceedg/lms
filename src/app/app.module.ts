@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 // Firebase
 import { AngularFireModule } from "@angular/fire/compat";
@@ -14,16 +15,21 @@ import { PrimengModule } from './shared/primeng/primeng.module';
 
 // Pages
 import { AuthComponent } from './pages/auth/auth.component';
-import { environment } from 'src/environments/environment';
-import { NavbarComponent } from './components/navbar/navbar.component';
 
 // Components
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { CrudService } from './shared/services/crud.service';
+import { CoursePlayerComponent } from './pages/course-player/course-player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileComponent,
+    CoursePlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,9 +37,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AppRoutingModule,
     PrimengModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [CrudService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
