@@ -23,100 +23,130 @@
     </div>
 
     <div class="col-md-8 col-sm-12">
-      <p-dataView [value]="courses" [paginator]="true" [rows]="10" filterBy="name">
 
-        <ng-template pTemplate="header">
-          <div class="d-flex justify-content-end bg-transparent pb-4">
-            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-          </div>
-        </ng-template>
-
-        <ng-template let-course pTemplate="listItem" style="background: transparent;">
-          <!-- List template -->
-          <div class="rounded shadow bg-white d-flex overflow-hidden flex-wrap mb-4 w-100">
-            <img class="course-img" [src]="course.img + '?' + course.id" alt="">
-            <div class="p-3 course-content">
-              <span class="text-base">
-                Curso
-              </span>
-
-              <!-- Title -->
-              <h4>
-                {{course.name}}
-              </h4>
-
-              <!-- Course details -->
-              <div class="d-flex flex-wrap">
-                <!-- Rating -->
-                <div class="d-flex align-items-center">
-                  <span>{{course.rating}}</span>
-                  <p-rating [(ngModel)]="course.rating" [readonly]="true" [cancel]="false"></p-rating>
+      <!-- Skeleton -->
+      <div *ngIf="loading" class="w-100 mt-5">
+        <div *ngFor="let skeleton of [0,1,2,3,4,5]">
+          <div class="w-100 mb-4">
+            <div class="w-100 d-flex">
+              <div>
+                <p-skeleton width="270px" height="170px"></p-skeleton>
+              </div>
+              <div class="d-flex flex-column ms-3 mt-3 w-100">
+                <div class="w-100">
+                  <p-skeleton width="8rem" styleClass="mb-2"></p-skeleton>
+                  <p-skeleton width="15rem" height="1.5rem" styleClass="mb-4"></p-skeleton>
+                  <div class="d-flex mb-2">
+                    <p-skeleton width="10rem" styleClass=""></p-skeleton>
+                    <p-skeleton width="4rem" styleClass="ms-2"></p-skeleton>
+                    <p-skeleton width="10rem" styleClass="ms-2"></p-skeleton>
+                  </div>
                 </div>
-
-                <!-- Students -->
-                <div class="d-flex align-items-center ms-3">
-                  <span>{{course.students}} ests.</span>
+                <div class="flex justify-content-between mt-3">
+                  <p-skeleton width="80%" height="2rem"></p-skeleton>
                 </div>
-
-                <!-- Teacher -->
-                <div class="d-flex align-items-center ms-3">
-                  <span class="fw-bold">Por {{course.teacher}}</span>
-                </div>
-
-                <a [routerLink]="'/courses/detail/' + course.id" class="w-100">
-                  <button pButton pRipple type="button" label="Ver detalles"
-                    class="p-button-outlined mt-3 w-100"></button>
-                </a>
               </div>
             </div>
           </div>
-          <!-- / List template -->
-        </ng-template>
+        </div>
+      </div>
 
-        <ng-template let-course pTemplate="gridItem"
-          style="background: transparent; display: flex; flex-wrap: wrap; justify-content: space-evenly;">
-          <!-- Grid template -->
-          <div class="bg-white rounded shadow overflow-hidden mb-3 grid-card">
-            <img style="width: 100%;" [src]="course.img + '?' + course.id" alt="">
-            <div class="p-3 d-flex flex-column justify-content-between grid-card-content">
-              <div>
+      <div *ngIf="!loading">
+        <p-dataView [value]="courses" [paginator]="true" [rows]="10" filterBy="name">
+
+          <ng-template pTemplate="header">
+            <div class="d-flex justify-content-end bg-transparent pb-4">
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+          </ng-template>
+
+          <ng-template let-courses pTemplate="listItem" style="background: transparent;">
+            <!-- List template -->
+            <div class="rounded shadow bg-white d-flex overflow-hidden flex-wrap mb-4 w-100">
+              <img class="course-img" [src]="courses.img + '?' + courses.id" alt="">
+              <div class="p-3 course-content">
                 <span class="text-base">
-                  Curso
+                  {{courses.category}}
                 </span>
 
                 <!-- Title -->
-                <h5 class="course-name">
-                  {{course.name}}
-                </h5>
-              </div>
+                <h4>
+                  {{courses.name}}
+                </h4>
 
-              <!-- Course details -->
-              <div class="d-flex flex-column">
-                <!-- Rating -->
-                <div class="d-flex align-items-center">
-                  <span class="me-1">{{course.rating}}</span>
-                  <p-rating [(ngModel)]="course.rating" [readonly]="true" [cancel]="false"></p-rating>
+                <!-- Course details -->
+                <div class="d-flex flex-wrap">
+                  <!-- Rating -->
+                  <div class="d-flex align-items-center">
+                    <span>{{courses.rating}}</span>
+                    <p-rating [(ngModel)]="courses.rating" [readonly]="true" [cancel]="false"></p-rating>
+                  </div>
+
+                  <!-- Students -->
+                  <div class="d-flex align-items-center ms-3">
+                    <span>{{courses.members}} ests.</span>
+                  </div>
+
+                  <!-- Teacher -->
+                  <div class="d-flex align-items-center ms-3">
+                    <span class="fw-bold">Por {{courses.author}}</span>
+                  </div>
+
+                  <a [routerLink]="'/courses/detail/' + courses.id" class="w-100">
+                    <button pButton pRipple type="button" label="Ver detalles"
+                      class="p-button-outlined mt-3 w-100"></button>
+                  </a>
                 </div>
-
-                <!-- Students -->
-                <div class="d-flex align-items-center">
-                  <span>{{course.students}} estudiantes</span>
-                </div>
-
-                <!-- Teacher -->
-                <div class="d-flex align-items-center">
-                  <span class="fw-bold" style="font-size: .95rem;">Por {{course.teacher}}</span>
-                </div>
-
-                <a [routerLink]="'/courses/detail/' + course.id">
-                  <button pButton pRipple type="button" label="Ver detalles" class="p-button-outlined mt-3"></button>
-                </a>
               </div>
             </div>
-          </div>
-          <!-- / Grid template -->
-        </ng-template>
-      </p-dataView>
+            <!-- / List template -->
+          </ng-template>
+
+          <ng-template let-courses pTemplate="gridItem"
+            style="background: transparent; display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+            <!-- Grid template -->
+            <div class="bg-white rounded shadow overflow-hidden mb-3 grid-card">
+              <img style="width: 100%;" [src]="courses.img + '?' + courses.id" alt="">
+              <div class="p-3 d-flex flex-column justify-content-between grid-card-content">
+                <div>
+                  <span class="text-base">
+                    {{courses.category}}
+                  </span>
+
+                  <!-- Title -->
+                  <h5 class="course-name">
+                    {{courses.name}}
+                  </h5>
+                </div>
+
+                <!-- Course details -->
+                <div class="d-flex flex-column">
+                  <!-- Rating -->
+                  <div class="d-flex align-items-center">
+                    <span class="me-1">{{courses.rating}}</span>
+                    <p-rating [(ngModel)]="courses.rating" [readonly]="true" [cancel]="false"></p-rating>
+                  </div>
+
+                  <!-- Students -->
+                  <div class="d-flex align-items-center">
+                    <span>{{courses.members}} estudiantes</span>
+                  </div>
+
+                  <!-- Teacher -->
+                  <div class="d-flex align-items-center">
+                    <span class="fw-bold" style="font-size: .95rem;">Por {{courses.teacher}}</span>
+                  </div>
+
+                  <a [routerLink]="'/courses/detail/' + courses.id">
+                    <button pButton pRipple type="button" label="Ver detalles" class="p-button-outlined mt-3"></button>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- / Grid template -->
+          </ng-template>
+        </p-dataView>
+      </div>
 
     </div>
   </div>

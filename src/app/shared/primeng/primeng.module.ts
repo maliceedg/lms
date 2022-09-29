@@ -16,11 +16,11 @@ import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
 import { DataViewModule } from 'primeng/dataview';
+import { SkeletonModule } from 'primeng/skeleton';
 import { InputTextModule } from "primeng/inputtext";
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
-
 
 const modules = [
   TreeModule,
@@ -37,6 +37,7 @@ const modules = [
   DropdownModule,
   PasswordModule,
   DataViewModule,
+  SkeletonModule,
   InputTextModule,
   FileUploadModule,
   InputNumberModule,

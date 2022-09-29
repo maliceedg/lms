@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { categories } from 'src/app/shared/utilities/categories';
 import { courses, course } from "../../../shared/utilities/courses";
 import { TreeNode } from 'primeng/api';
+import { collection, getDocs, query, where, doc } from 'firebase/firestore';
+import { CrudService } from 'src/app/shared/services/crud.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,12 +14,14 @@ import { TreeNode } from 'primeng/api';
 export class CourseListComponent implements OnInit {
 
   students = Math.round(Math.random() * 20)
-  courses = courses;
+  courses: any[] = [];
   categories = categories;
   nodes: TreeNode[];
+  loading: boolean = true;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private crudService: CrudService
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +52,20 @@ export class CourseListComponent implements OnInit {
         ]
       },
     ];
+    this.getCourses();
+  }
+
+  async getCourses() {
+    this.courses = [];
+    const querySnapshot = await getDocs(collection(this.crudService.db, "courses"));
+    querySnapshot.forEach((doc) => {
+      this.courses.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    console.log(this.courses);    
+    this.loading = false;
   }
 
 }
