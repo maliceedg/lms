@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { course, courses } from "src/app/shared/utilities/courses";
 import { collection, getDocs, doc, setDoc, query, where, getDoc } from "firebase/firestore";
 import { CrudService } from 'src/app/shared/services/crud.service';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { render } from "creditcardpayments/creditCardPayments";
+import { formatDate } from '@angular/common';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { SalesOrder } from "../../../shared/services/crud.service";
 
 @Component({
   selector: 'app-course-detail',
@@ -21,10 +23,12 @@ export class CourseDetailComponent implements OnInit {
   lessonURL: any = '';
   loading: boolean = true;
   display = false;
+  saleOrder: SalesOrder;
 
   constructor(
     private route: ActivatedRoute,
     private crudService: CrudService,
+    private authService: AuthService,
     protected _sanitizer: DomSanitizer) {
     this.route.paramMap.subscribe((param: ParamMap) => {
       this.loadCourse(param.get('id'));
@@ -41,6 +45,8 @@ export class CourseDetailComponent implements OnInit {
     const docSnap = await getDoc(docRef);
     this.course = docSnap.data();
     this.loading = false;
+
+    this.buyCourse();
   }
 
   bgGenerator() {
@@ -53,7 +59,7 @@ export class CourseDetailComponent implements OnInit {
     console.log(split);
   }
 
-  showDialog() {
+  showDialog(price: number) {
     this.display = true;
 
     setTimeout(() => {
@@ -61,13 +67,28 @@ export class CourseDetailComponent implements OnInit {
         {
           id: '#myPaypalButtons',
           currency: 'USD',
-          value: '10',
+          value: price.toString(),
           onApprove: (details) => {
-            alert('Transaccion exitosa');
+            if (details.status == 'COMPLETED') {
+              this.buyCourse();
+            }
           }
         }
       )
     }, 500);
   }
+
+  buyCourse() {
+    this.saleOrder = {
+      authorId: this.course.userID,
+      courseId: this.id,
+      courseName: this.course.name,
+      date: formatDate(new Date(), 'dd/MM/yyy', 'en'),
+      price: this.course.price,
+      userID: this.authService.getUserId()
+    }
+    this.crudService.buyCourse(this.saleOrder);
+  }
+
 
 }
