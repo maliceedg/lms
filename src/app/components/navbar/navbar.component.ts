@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +11,19 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class NavbarComponent implements OnInit {
 
   items: MenuItem[] = [];
+  overlay: boolean = false;
+  url: string = '';
+
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.url = event.url;
+      };
+    })
+  }
 
   ngOnInit(): void {
     this.items = [
@@ -33,6 +42,12 @@ export class NavbarComponent implements OnInit {
         ]
       },
       {
+        label: 'Mis Cursos',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'my-courses',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
         label: 'Perfil',
         icon: 'pi pi-fw pi-user',
         routerLink: 'profile',
@@ -49,7 +64,11 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/auth');
+    this.overlay = true;
+    setTimeout(() => {
+      this.overlay = false;
+      this.router.navigateByUrl('/auth')
+    }, 500);
   }
 }
 
