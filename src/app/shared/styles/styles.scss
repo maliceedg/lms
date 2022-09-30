@@ -78,7 +78,7 @@
 }
 
 .text-accent {
-    color: #a87fb9 !important;
+    color: #6f44bb !important;
 }
 
 .bg-primary {
@@ -86,7 +86,14 @@
 }
 
 .bg-accent {
-    background-color: #a87fb9 !important;
+    background-color: #6f44bb !important;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 80%;
 }
 
 /* Background */
