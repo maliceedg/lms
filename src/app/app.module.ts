@@ -22,6 +22,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CrudService } from './shared/services/crud.service';
 import { CoursePlayerComponent } from './pages/course-player/course-player.component';
+import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { CoursePlayerComponent } from './pages/course-player/course-player.compo
     NavbarComponent,
     ProfileComponent,
     CoursePlayerComponent,
+    MyCoursesComponent,
   ],
   imports: [
     BrowserModule,
