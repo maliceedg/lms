@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit {
       displayName: this.updateInfo.value.name,
       phoneNumber: this.updateInfo.value.phone,
       photoURL: this.updateInfo.value.photoURL
-    }
+    };
     return (await this.afAuth.currentUser).updateProfile(profile);
   }
 
