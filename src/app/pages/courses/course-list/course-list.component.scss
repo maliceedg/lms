@@ -57,10 +57,7 @@
     font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    white-space: initial;
+    white-space: nowrap;
   }
 
   ::ng-deep .p-rating .p-rating-icon.pi-star-fill,
@@ -84,7 +81,7 @@
 }
 
 .course-name {
-  width: 85%;
+  width: 90%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

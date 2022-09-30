@@ -63,16 +63,21 @@
           <ng-template let-courses pTemplate="listItem" style="background: transparent;">
             <!-- List template -->
             <div class="rounded shadow bg-white d-flex overflow-hidden flex-wrap mb-4 w-100">
-              <img class="course-img" [src]="courses.img + '?' + courses.id" alt="">
+              <img class="course-img" [src]="'https://picsum.photos/300/200' + '?' + courses.id" alt="">
               <div class="p-3 course-content">
                 <span class="text-base">
                   {{courses.category}}
                 </span>
 
-                <!-- Title -->
-                <h4>
-                  {{courses.name}}
-                </h4>
+                <!-- Title and Price-->
+                <div class="d-flex justify-content-between">
+                  <h4 class="ellipsis">
+                    {{courses.name}}
+                  </h4>
+                  <h4 class="text-accent fw-bold">
+                    {{courses.price}}$
+                  </h4>
+                </div>
 
                 <!-- Course details -->
                 <div class="d-flex flex-wrap">
@@ -106,12 +111,17 @@
             style="background: transparent; display: flex; flex-wrap: wrap; justify-content: space-evenly;">
             <!-- Grid template -->
             <div class="bg-white rounded shadow overflow-hidden mb-3 grid-card">
-              <img style="width: 100%;" [src]="courses.img + '?' + courses.id" alt="">
-              <div class="p-3 d-flex flex-column justify-content-between grid-card-content">
+              <img style="width: 100%;" [src]="'https://picsum.photos/300/200' + '?' + courses.id" alt="">
+              <div class="p-3 d-flex flex-column justify-content-between grid-card-content h-auto">
                 <div>
-                  <span class="text-base">
-                    {{courses.category}}
-                  </span>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-base">
+                      {{courses.category}}
+                    </span>
+                    <h4 class="text-accent fw-bold mt-2">
+                      {{courses.price}}$
+                    </h4>
+                  </div>
 
                   <!-- Title -->
                   <h5 class="course-name">
@@ -134,10 +144,10 @@
 
                   <!-- Teacher -->
                   <div class="d-flex align-items-center">
-                    <span class="fw-bold" style="font-size: .95rem;">Por {{courses.teacher}}</span>
+                    <span class="fw-bold" style="font-size: .95rem;">Por {{courses.author}}</span>
                   </div>
 
-                  <a [routerLink]="'/courses/detail/' + courses.id">
+                  <a [routerLink]="'/courses/detail/' + courses.id" class="align-self-center">
                     <button pButton pRipple type="button" label="Ver detalles" class="p-button-outlined mt-3"></button>
                   </a>
                 </div>
