@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -22,6 +22,7 @@
     "@angular/router": "~13.3.0",
     "@firebase/auth": "^0.20.3",
     "creditcardpayments": "^1.0.3",
+    "express": "^4.18.1",
     "firebase": "^9.8.3",
     "primeicons": "^5.0.0",
     "primeng": "^13.4.1",
