@@ -31,8 +31,6 @@ export class ProfileComponent implements OnInit {
   userInfo: any;
   fb;
 
-  baseUrl = this.crudService.baseUrl;
-
   public currentImage;
   public image;
   imageUrl: string;
