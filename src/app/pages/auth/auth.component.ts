@@ -60,7 +60,9 @@ export class AuthComponent implements OnInit {
   googleLogin() {
     const { email, password } = this.user;
     this.authService.googleLogin(email, password).then(res => {
-      console.log(res);
+      if (this.authService.checkToken()) {
+        this.router.navigateByUrl('courses');
+      }
     })
   }
 

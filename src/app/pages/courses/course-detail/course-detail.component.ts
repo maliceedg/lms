@@ -45,8 +45,6 @@ export class CourseDetailComponent implements OnInit {
     const docSnap = await getDoc(docRef);
     this.course = docSnap.data();
     this.loading = false;
-
-    this.buyCourse();
   }
 
   bgGenerator() {

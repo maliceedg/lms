@@ -23,6 +23,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CrudService } from './shared/services/crud.service';
 import { CoursePlayerComponent } from './pages/course-player/course-player.component';
 import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -32,11 +34,13 @@ import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
     ProfileComponent,
     CoursePlayerComponent,
     MyCoursesComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
     AppRoutingModule,
     PrimengModule,
     FormsModule,

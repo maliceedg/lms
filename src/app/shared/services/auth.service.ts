@@ -44,7 +44,12 @@ export class AuthService {
 
   async googleLogin(email: string, password: string) {
     try {
-      return await this.angularFireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+      return await this.angularFireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((res: any) => {      
+        const token = res.user._delegate.accessToken;
+        const { displayName, email, uid } = res.user._delegate;
+        this.setUser({ id: uid, name: displayName, email });
+        this.setToken(token);
+      });
     } catch (err) {
       console.log('google login error: ', err);
       return null;
@@ -64,8 +69,8 @@ export class AuthService {
     return localStorage.getItem('id');
   }
 
-  getUser(): {name: string, email: string, id: string} {
-    return this.user ? this.user : JSON.parse(localStorage.getItem('user'))
+  getUser(): { name: string, email: string, id: string } {
+    return JSON.parse(localStorage.getItem('user'))
   }
 
   setToken(token: string) {
@@ -97,4 +102,12 @@ export class AuthService {
       console.log('Hubo un error al cerrar sesión')
     });
   }
+
+  async UpdateProfile(displayName?: string, photoURL?: string) {
+    const profile = {
+        displayName: displayName,
+        photoURL: photoURL
+    }
+    return (await this.angularFireAuth.currentUser).updateProfile(profile);
+}
 }
