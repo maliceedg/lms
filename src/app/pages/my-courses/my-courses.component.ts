@@ -20,7 +20,7 @@ export class MyCoursesComponent implements OnInit {
     private apiService: ApiService,
     private crudService: CrudService,
     private authService: AuthService
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -38,22 +38,25 @@ export class MyCoursesComponent implements OnInit {
       this.salesOrders.push({
         id: doc.id,
         ...doc.data()
-      });      
+      });
     });
-    
+
     for (let i = 0; i < this.salesOrders.length; i++) {
       this.getCourses(this.salesOrders[i].courseId)
     }
 
     setTimeout(() => {
       this.loading = false;
-    }, 500);
+    }, 300);
+
   }
 
   async getCourses(documentId: string) {
     const docRef = doc(this.crudService.db, 'courses', documentId);
     const docu = await getDoc(docRef);
+
     this.courses.push(docu.data());
+    console.log(this.courses);
   }
 
 }

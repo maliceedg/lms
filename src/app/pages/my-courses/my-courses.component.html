@@ -75,7 +75,7 @@
                     <span class="fw-bold">Por {{courses.author}}</span>
                   </div>
 
-                  <a [routerLink]="'/courses/detail/' + courses.id" class="w-100">
+                  <a [routerLink]="'/courses/detail/' + courses?.id" class="w-100">
                     <button pButton pRipple type="button" label="Ver detalles"
                       class="p-button-outlined mt-3 w-100"></button>
                   </a>

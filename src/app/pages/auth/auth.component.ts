@@ -54,6 +54,7 @@ export class AuthComponent implements OnInit {
   register() {
     const { email, password } = this.user;
     this.authService.register(email, password).then(res => {
+      this.router.navigateByUrl('courses');
     })
   }
 
