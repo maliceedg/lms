@@ -5,6 +5,10 @@
   height: 200px;
 }
 
+.profile {
+  min-height: calc(100vh - 276px);
+}
+
 .profile-title {
   position: absolute;
   top: 50%;
