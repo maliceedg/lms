@@ -33,12 +33,23 @@
   }
 }
 
-.course-img img {
+img.course-img {
+  max-width: 420px;
   width: 100%;
 
   @media screen and (max-width: $sm) {
     width: 100%;
     height: auto;
+  }
+}
+
+ img.img-placeholder {
+  height: 300px !important;
+
+  @media screen and (max-width: $sm) {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
   }
 }
 
@@ -60,6 +71,10 @@
 }
 
 /* Video Player */
+.course-lessons {
+  min-height: calc(100vh - 476px);
+}
+
 .lessons {
   justify-content: space-between;
 
@@ -118,4 +133,13 @@
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
+}
+
+/* Payments */
+.acquire-course {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
 }

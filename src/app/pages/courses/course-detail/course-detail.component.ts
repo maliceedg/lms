@@ -26,6 +26,7 @@ export class CourseDetailComponent implements OnInit {
   display = false;
   saleOrder: SalesOrder;
   images: any[] = [];
+  boughtCourse: boolean = false;
 
   // Firebase
   storage = getStorage();
@@ -43,6 +44,7 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit() {
     this.bg = this.bgGenerator();
+    this.isBought();
   }
 
   async loadCourse(id: string) {
@@ -51,8 +53,6 @@ export class CourseDetailComponent implements OnInit {
     this.course = docSnap.data();
 
     this.getCourseImage(this.course.photoURL);
-    console.log(this.course);
-    console.log(this.images);
     this.loading = false;
   }
 
@@ -63,7 +63,6 @@ export class CourseDetailComponent implements OnInit {
   getLesson(url: string) {
     let split = url.split('https://www.youtube.com/watch?v=')[1];
     this.lessonURL = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + split);
-    console.log(split);
   }
 
   showDialog(price: number) {
@@ -78,6 +77,7 @@ export class CourseDetailComponent implements OnInit {
           onApprove: (details) => {
             if (details.status == 'COMPLETED') {
               this.buyCourse();
+              this.isBought();
             }
           }
         }
@@ -112,6 +112,19 @@ export class CourseDetailComponent implements OnInit {
         this.images.push('');
       }
     }, 100);
+  }
+
+  async isBought() {
+    const q = query(collection(this.crudService.db, "sales-order"), where("userID", "==", this.authService.getUser().id));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      if (doc.data()['userID'] == this.authService.getUserId() && doc.data()['courseId'] == this.id ) {
+        this.boughtCourse = true;
+      } else {
+        this.boughtCourse = false;
+      }
+    });
   }
 
 }
