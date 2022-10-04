@@ -36,7 +36,12 @@
 
       <!-- Course Img -->
       <div class="col-md-4 col-sm-12 course-img d-flex align-items-center">
-        <img [src]="'https://picsum.photos/300/200' + '?' + id" [alt]="course?.name" class="rounded shadow">
+        <div *ngIf="course.photoURL == ''">
+          <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
+        </div>
+        <div *ngIf="course.photoURL != ''">
+          <img class="course-img rounded shadow" [src]="images[0]" alt="Portada del curso">
+        </div>
       </div>
       <!-- Course Details -->
       <div class="col-md-7 col-sm-12 course-details bg-white rounded shadow p-3">

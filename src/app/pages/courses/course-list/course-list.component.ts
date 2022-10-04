@@ -75,8 +75,6 @@ export class CourseListComponent implements OnInit {
       });
       i++;
     });
-    console.log('courses ', this.courses);
-    console.log('images ', this.images);
     this.loading = false;
   }
 

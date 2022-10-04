@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { collection, getDocs, doc, setDoc, query, where, getDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { render } from "creditcardpayments/creditCardPayments";
@@ -24,6 +25,10 @@ export class CourseDetailComponent implements OnInit {
   loading: boolean = true;
   display = false;
   saleOrder: SalesOrder;
+  images: any[] = [];
+
+  // Firebase
+  storage = getStorage();
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +49,10 @@ export class CourseDetailComponent implements OnInit {
     const docRef = doc(this.crudService.db, "courses", id);
     const docSnap = await getDoc(docRef);
     this.course = docSnap.data();
+
+    this.getCourseImage(this.course.photoURL);
+    console.log(this.course);
+    console.log(this.images);
     this.loading = false;
   }
 
@@ -88,5 +97,21 @@ export class CourseDetailComponent implements OnInit {
     this.crudService.buyCourse(this.saleOrder);
   }
 
+  getCourseImage(photoURL: string) {
+    setTimeout(() => {
+      if (photoURL != '') {
+        getDownloadURL(ref(this.storage, photoURL))
+          .then((url) => {
+            // `url` is the download URL for 'images/stars.jpg'            
+            this.images.push(url);     
+          })
+          .catch((error) => {
+            // Handle any errors
+          });
+      } else if (photoURL == '') {
+        this.images.push('');
+      }
+    }, 100);
+  }
 
 }
