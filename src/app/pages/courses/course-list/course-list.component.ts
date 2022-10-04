@@ -5,6 +5,7 @@ import { courses, course } from "../../../shared/utilities/courses";
 import { TreeNode } from 'primeng/api';
 import { collection, getDocs, query, where, doc } from 'firebase/firestore';
 import { CrudService } from 'src/app/shared/services/crud.service';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 @Component({
   selector: 'app-courses',
@@ -18,6 +19,10 @@ export class CourseListComponent implements OnInit {
   categories = categories;
   nodes: TreeNode[];
   loading: boolean = true;
+  images: any[] = [];
+
+  // Firebase
+  storage = getStorage();
 
   constructor(
     private http: HttpClient,
@@ -57,15 +62,40 @@ export class CourseListComponent implements OnInit {
 
   async getCourses() {
     this.courses = [];
+    this.images = [];
+
+    let i: number = 0;
+
     const querySnapshot = await getDocs(collection(this.crudService.db, "courses"));
     querySnapshot.forEach((doc) => {
       this.courses.push({
         id: doc.id,
+        photoURL: this.getCourseImage(doc.data()['photoURL'], i),
         ...doc.data()
       });
+      i++;
     });
-    console.log(this.courses);    
+    console.log('courses ', this.courses);
+    console.log('images ', this.images);
     this.loading = false;
+  }
+
+  getCourseImage(photoURL: string, i: number) {
+    setTimeout(() => {
+      if (photoURL != '') {
+        getDownloadURL(ref(this.storage, photoURL))
+          .then((url) => {
+            // `url` is the download URL for 'images/stars.jpg'
+            //this.images.push(url);
+            this.images.splice(i, 0, url);
+          })
+          .catch((error) => {
+            // Handle any errors
+          });
+      } else if (photoURL == '') {
+        this.images.push('');
+      }
+    }, 100);
   }
 
 }

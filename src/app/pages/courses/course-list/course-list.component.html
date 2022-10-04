@@ -60,10 +60,16 @@
             </div>
           </ng-template>
 
-          <ng-template let-courses pTemplate="listItem" style="background: transparent;">
+          <ng-template pTemplate="listItem" style="background: transparent;">
             <!-- List template -->
-            <div class="rounded shadow bg-white d-flex overflow-hidden flex-wrap mb-4 w-100">
-              <img class="course-img" [src]="'https://picsum.photos/300/200' + '?' + courses.id" alt="">
+            <div *ngFor="let courses of courses; let i=index" class="rounded shadow bg-white d-flex overflow-hidden flex-wrap mb-4 w-100">
+              <div *ngIf="courses.photoURL == ''">
+                <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
+              </div>
+              <div *ngIf="courses.photoURL != ''">
+                <img class="course-img" [src]="images[i]" alt="Portada del curso">
+              </div>
+              
               <div class="p-3 course-content">
                 <span class="text-base">
                   {{courses.category}}

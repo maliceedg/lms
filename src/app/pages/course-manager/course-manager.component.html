@@ -11,48 +11,89 @@
     <button type="button" class="button-selector" (click)="viewToggle('create')"
       [ngClass]="{'disabled': view == 'view'}">Crear</button>
   </div>
-  <div class="container">
 
+  <div class="container manager">
     <div *ngIf="view == 'view'">
-      <div *ngFor="let course of courses" class="course-card rounded shadow bg-white d-flex overflow-hidden mb-4 w-100">
-        <img class="course-img" [src]="'https://picsum.photos/200?id=' + course.id" alt="">
-        <div class="p-3 course-content">
-          <span class="text-base">
-            {{course?.category}}
-          </span>
 
-          <div class="w-100 d-flex align-items-center justify-content-between">
-            <!-- Title -->
-            <h4>
-              {{course?.name}}
-            </h4>
+      <div *ngIf="noCourses">
+        <p class="fs-3 text-center mt-5">No tienes cursos creados</p>
+        <p class="fs-5 text-center mt-2">Por favor, dirígete a la pestaña de Crear para crear un curso</p>
+      </div>
 
-            <button pButton pRipple type="button" label="" icon="pi pi-pencil"
-              class="p-button-outlined p-button-sm rounded" (click)="showDialog(course)"></button>
+      <!-- Skeleton -->
+      <div *ngIf="loading" class="w-100 mt-5">
+        <div *ngFor="let skeleton of [0,1,2,3,4,5]">
+          <div class="w-100 mb-4">
+            <div class="w-100 d-flex">
+              <div>
+                <p-skeleton width="270px" height="170px"></p-skeleton>
+              </div>
+              <div class="d-flex flex-column ms-3 mt-3 w-100">
+                <div class="w-100">
+                  <p-skeleton width="8rem" styleClass="mb-2"></p-skeleton>
+                  <p-skeleton width="15rem" height="1.5rem" styleClass="mb-4"></p-skeleton>
+                  <div class="d-flex mb-2">
+                    <p-skeleton width="10rem" styleClass=""></p-skeleton>
+                    <p-skeleton width="4rem" styleClass="ms-2"></p-skeleton>
+                    <p-skeleton width="10rem" styleClass="ms-2"></p-skeleton>
+                  </div>
+                </div>
+                <div class="flex justify-content-between mt-3">
+                  <p-skeleton width="80%" height="2rem"></p-skeleton>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Course details -->
-          <div class="d-flex flex-wrap">
-            <!-- Rating -->
-            <div class="d-flex align-items-center">
-              <span>{{course?.rating}}</span>
-              <p-rating [(ngModel)]="course.rating" [readonly]="true" [cancel]="false"></p-rating>
+      <div *ngIf="!loading">
+        <div *ngFor="let course of courses; let i = index"
+          class="course-card rounded shadow bg-white d-flex overflow-hidden mt-4 w-100">
+          <div *ngIf="course.photoURL == ''">
+            <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
+          </div>
+          <div *ngIf="images[i]">
+            <img class="course-img" [src]="images[i]" alt="Portada del curso">
+          </div>
+          <div class="p-3 course-content">
+            <span class="text-base">
+              {{course?.category}}
+            </span>
+
+            <div class="w-100 d-flex align-items-center justify-content-between">
+              <!-- Title -->
+              <h4>
+                {{course?.name}}
+              </h4>
+
+              <button pButton pRipple type="button" label="" icon="pi pi-pencil"
+                class="p-button-outlined p-button-sm rounded" (click)="showDialog(course)"></button>
             </div>
 
-            <!-- Students -->
-            <div class="d-flex align-items-center ms-3">
-              <span>{{course?.members}} ests.</span>
-            </div>
+            <!-- Course details -->
+            <div class="d-flex flex-wrap">
+              <!-- Rating -->
+              <div class="d-flex align-items-center">
+                <span>{{course?.rating}}</span>
+                <p-rating [(ngModel)]="course.rating" [readonly]="true" [cancel]="false"></p-rating>
+              </div>
 
-            <!-- Teacher -->
-            <div class="d-flex align-items-center ms-3">
-              <span class="fw-bold">Por {{course?.author}}</span>
-            </div>
+              <!-- Students -->
+              <div class="d-flex align-items-center ms-3">
+                <span>{{course?.members}} ests.</span>
+              </div>
 
-            <a [routerLink]="'/courses/detail/'" class="w-100 d-flex">
-              <button pButton pRipple type="button" label="Ver detalles"
-                class="p-button-outlined mt-3 px-5 mx-auto"></button>
-            </a>
+              <!-- Teacher -->
+              <div class="d-flex align-items-center ms-3">
+                <span class="fw-bold">Por {{course?.author}}</span>
+              </div>
+
+              <a [routerLink]="'/courses/detail/' + course.id" class="w-100 d-flex" style="text-decoration: none;">
+                <button pButton pRipple type="button" label="Ver detalles"
+                  class="p-button-outlined mt-3 px-5 mx-auto rounded"></button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -63,20 +104,38 @@
         <h4 class="mb-3">Información básica</h4>
 
         <form [formGroup]="courseForm" (ngSubmit)="uploadCourse()">
-          <div class="d-flex flex-column">
-            <h5>Nombre del curso</h5>
-            <div class="p-inputgroup d-flex w-100">
-              <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
-              <input type="text" formControlName="name" pInputText
-                placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos" class="w-100">
+
+          <div class="input-group d-flex justify-content-between flex-wrap">
+            <div class="d-flex flex-column mt-3">
+              <h5>Nombre del curso</h5>
+              <div class="p-inputgroup d-flex w-100">
+                <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+                <input type="text" formControlName="name" pInputText
+                  placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos">
+              </div>
+            </div>
+
+            <div class="d-flex flex-column mt-3">
+              <h5>Precio del curso</h5>
+              <div class="p-inputgroup d-flex w-100">
+                <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
+                <input type="number" formControlName="price" pInputText placeholder="En divisas extranjeras">
+              </div>
             </div>
           </div>
 
           <div class="d-flex flex-column mt-3">
             <h5>Descripción del curso</h5>
             <div class="p-inputgroup d-flex w-100">
-              <textarea rows="5" cols="30" formControlName="description" pInputTextarea class="w-100"></textarea>
+              <textarea rows="5" cols="30" formControlName="description" pInputTextarea class="w-100"
+                placeholder="Una descripción, tan breve como gustes, de los contenidos de tu curso"></textarea>
             </div>
+          </div>
+
+          <div class="d-flex flex-column mt-3">
+            <h5>Portada del curso</h5>
+            <input type="file" accept=".jpg,.png,.jpeg" formControlName="price" pInputText class="w-100"
+              (change)="onFileSelected($event)">
           </div>
 
           <div class="d-flex flex-wrap justify-content-between mt-3">
@@ -152,12 +211,22 @@
   [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
 
   <form [formGroup]="editCourseForm" (ngSubmit)="uploadCourse()">
-    <div class="d-flex flex-column">
-      <h5>Nombre del curso</h5>
-      <div class="p-inputgroup d-flex w-100">
-        <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
-        <input type="text" formControlName="name" pInputText
-          placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos" class="w-100">
+    <div class="input-group d-flex justify-content-between flex-wrap">
+      <div class="d-flex flex-column mt-3">
+        <h5>Nombre del curso</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+          <input type="text" formControlName="name" pInputText
+            placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos">
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <h5>Precio del curso</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
+          <input type="number" formControlName="price" pInputText placeholder="En divisas extranjeras">
+        </div>
       </div>
     </div>
 
@@ -193,7 +262,7 @@
     <div class="d-flex justify-content-between mt-4">
       <h3>Lecciones</h3>
       <div>
-        <button pButton pRipple type="button" icon="pi pi-plus" class="rounded" (click)="addLesson()"></button>
+        <button pButton pRipple type="button" icon="pi pi-plus" class="rounded" (click)="editAddLesson()"></button>
       </div>
     </div>
 
@@ -204,7 +273,7 @@
   </form>
 
   <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" type="button" (click)="display=false; paVe()" label="Editar Cursos"
+    <p-button icon="pi pi-check" type="button" (click)="updateCourse(editCourseForm.value.name);" label="Editar Cursos"
       styleClass="p-button-text p-button-success"></p-button>
   </ng-template>
 </p-dialog>

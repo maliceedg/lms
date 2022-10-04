@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { categories } from "../../shared/utilities/categories";
-import { collection, getDocs, doc, setDoc, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, updateDoc, where, writeBatch } from "firebase/firestore";
 import { Course, CrudService } from 'src/app/shared/services/crud.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 interface Category {
   name: string,
@@ -37,12 +39,20 @@ export class CourseManagerComponent implements OnInit {
   editCourseForm: FormGroup;
   author: string;
 
+  public imageUrl: string;
+
   display: boolean = false;
+  noCourses: boolean = false;
+  loading: boolean = false;
+  images: any[] = [];
+
+  // Firebase
+  storage = getStorage();
 
   constructor(
     private crudService: CrudService,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.courseForm = this.formBuilder.group({
       author: this.author,
@@ -52,6 +62,8 @@ export class CourseManagerComponent implements OnInit {
       members: 1,
       name: '',
       subcategory: '',
+      photoURL: '',
+      price: Number,
       rating: 1,
       userID: ''
     });
@@ -75,11 +87,11 @@ export class CourseManagerComponent implements OnInit {
       members: '',
       name: '',
       subcategory: '',
+      photoURL: '',
+      price: Number,
       rating: '',
       userID: ''
     });
-
-    this.paVe();
   }
 
   viewToggle(window: string) {
@@ -100,19 +112,28 @@ export class CourseManagerComponent implements OnInit {
       this.courses.push(doc.data());
     }); */
 
+    this.loading = true;
     const q = query(collection(this.crudService.db, "courses"), where("userID", "==", this.id));
 
     this.courses = [];
+    this.images = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       this.courses.push({
         id: doc.id,
+        photoURL: this.getCourseImage(doc.data()['photoURL']),
         ...doc.data()
       });
     });
+
+    setTimeout(() => {
+      if (this.courses.length <= 0) this.noCourses = true;
+    }, 100);
+    this.loading = false;
   }
 
+  /* Course */
   lessons(): FormArray {
     return this.courseForm.get('lessons') as FormArray;
   }
@@ -128,6 +149,22 @@ export class CourseManagerComponent implements OnInit {
     this.lessons().push(this.newLesson());
   }
 
+  /* Edit course */
+  editLessons(): FormArray {
+    return this.editCourseForm.get('lessons') as FormArray;
+  }
+
+  editNewLesson(): FormGroup {
+    return this.formBuilder.group({
+      name: '',
+      url: ''
+    });
+  }
+
+  editAddLesson() {
+    this.editLessons().push(this.editNewLesson());
+  }
+
   removeLesson(index: number) {
     this.lessons().removeAt(index);
   }
@@ -135,14 +172,33 @@ export class CourseManagerComponent implements OnInit {
   uploadCourse() {
     this.courseForm.patchValue({
       author: this.author,
-      userID: this.id
+      userID: this.id,
+      photoURL: this.imageUrl
     });
+
     this.crudService.uploadCourse(this.courseForm.value);
   }
-  
-  paVe() {
-    this.authService.getUserId();
-    console.log(localStorage.getItem('id'));
+
+  async updateCourse(name: string) {
+    let id = '';
+    const batch = writeBatch(this.crudService.db);
+    const q = query(collection(this.crudService.db, "courses"), where("name", "==", name));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      id = doc.id;
+    });
+
+    const docData = {
+      category: this.editCourseForm.value.category,
+      description: this.editCourseForm.value.description,
+      lessons: this.editCourseForm.value.lessons,
+      name: this.editCourseForm.value.name,
+      subcategory: this.editCourseForm.value.subcategory,
+      photoURL: this.editCourseForm.value.photoURL,
+      price: this.editCourseForm.value.price
+    }
+    
+    this.crudService.updateCourse(this.editCourseForm.value, id);
   }
 
   showDialog(course: any) {
@@ -151,4 +207,32 @@ export class CourseManagerComponent implements OnInit {
     this.display = true;
   }
 
+  onFileSelected(event) {
+    const file = event.target.files[0];
+    const storageRef = ref(this.storage, ('images/courses/' + this.getRandomId() + '.' + file.name.split('.').pop()));
+
+    // 'file' comes from the Blob or File API
+    uploadBytes(storageRef, file).then((snapshot) => {
+      this.imageUrl = snapshot.metadata.fullPath;
+    });
+  }
+
+  getCourseImage(photoURL: string) {
+    setTimeout(() => {
+      if (photoURL != '') {
+        getDownloadURL(ref(this.storage, photoURL))
+          .then((url) => {
+            // `url` is the download URL for 'images/stars.jpg'
+            this.images.push(url);
+          })
+          .catch((error) => {
+            // Handle any errors
+          });
+      }
+    }, 100);
+  }
+
+  getRandomId() {
+    return Math.random().toString(36).substr(2, 16);
+  }
 }

@@ -72,7 +72,9 @@
 }
 
 .course-img {
-  width: 270px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
   background: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
 
   @media screen and (max-width: $sm) {
