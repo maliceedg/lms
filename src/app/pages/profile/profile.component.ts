@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -35,10 +35,10 @@ export class ProfileComponent implements OnInit {
   public image;
   imageUrl: string;
 
-  updateInfo = new FormGroup({
-    name: new FormControl(''),
-    phone: new FormControl(''),
-    photoURL: new FormControl('')
+  updateInfo = new UntypedFormGroup({
+    name: new UntypedFormControl(''),
+    phone: new UntypedFormControl(''),
+    photoURL: new UntypedFormControl('')
   })
 
   // Firebase

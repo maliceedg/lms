@@ -3,7 +3,7 @@ import { categories } from "../../shared/utilities/categories";
 import { collection, getDocs, doc, setDoc, query, where } from "firebase/firestore";
 import { Course, CrudService } from 'src/app/shared/services/crud.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 
 interface Category {
   name: string,
@@ -33,8 +33,8 @@ export class CourseManagerComponent implements OnInit {
   coursesRef = collection(this.crudService.db, 'courses');
 
   id: string;
-  courseForm: FormGroup;
-  editCourseForm: FormGroup;
+  courseForm: UntypedFormGroup;
+  editCourseForm: UntypedFormGroup;
   author: string;
 
   display: boolean = false;
@@ -42,7 +42,7 @@ export class CourseManagerComponent implements OnInit {
   constructor(
     private crudService: CrudService,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) {
     this.courseForm = this.formBuilder.group({
       author: this.author,
@@ -113,11 +113,11 @@ export class CourseManagerComponent implements OnInit {
     });
   }
 
-  lessons(): FormArray {
-    return this.courseForm.get('lessons') as FormArray;
+  lessons(): UntypedFormArray {
+    return this.courseForm.get('lessons') as UntypedFormArray;
   }
 
-  newLesson(): FormGroup {
+  newLesson(): UntypedFormGroup {
     return this.formBuilder.group({
       name: '',
       url: ''
