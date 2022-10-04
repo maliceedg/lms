@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { getAuth, signInWithEmailAndPassword, signOut } from '@firebase/auth';
 import firebase from 'firebase/compat/app';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { map, Observable, Subject, tap } from 'rxjs';
+import { CrudService } from './crud.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class AuthService {
 
   constructor(
     private angularFireAuth: AngularFireAuth,
+    private crudService: CrudService
   ) { }
 
   async login(email: string, password: string) {
@@ -44,7 +47,7 @@ export class AuthService {
 
   async googleLogin(email: string, password: string) {
     try {
-      return await this.angularFireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((res: any) => {      
+      return await this.angularFireAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((res: any) => {
         const token = res.user._delegate.accessToken;
         const { displayName, email, uid } = res.user._delegate;
         this.setUser({ id: uid, name: displayName, email });
@@ -105,9 +108,22 @@ export class AuthService {
 
   async UpdateProfile(displayName?: string, photoURL?: string) {
     const profile = {
-        displayName: displayName,
-        photoURL: photoURL
+      displayName: displayName,
+      photoURL: photoURL
     }
     return (await this.angularFireAuth.currentUser).updateProfile(profile);
-}
+  }
+
+  async isAdmin(): Promise<boolean> {
+    let id = '';
+    const q = query(collection(this.crudService.db, "admin"), where("userID", "==", this.getUser().id));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      id = doc.data()['userID'];
+    });
+    
+    return true ? (id == this.getUserId()) : false;
+  }
 }

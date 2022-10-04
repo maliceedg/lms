@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   items: MenuItem[] = [];
   overlay: boolean = false;
   url: string = '';
+  admin: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -30,15 +31,21 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Cursos',
         icon: 'pi pi-fw pi-book',
-        routerLink: 'courses',
-        routerLinkActiveOptions: { exact: true },
+        //routerLink: 'courses',
+        //routerLinkActiveOptions: { exact: true },
         items: [
+          {
+            label: 'Listado de Cursos',
+            icon: 'pi pi-fw pi-list',
+            routerLink: 'courses',
+            routerLinkActiveOptions: { exact: true }
+          },
           {
             label: 'Administrador de Cursos',
             icon: 'pi pi-fw pi-cog',
             routerLink: 'course-manager',
             routerLinkActiveOptions: { exact: true }
-          }
+          },
         ]
       },
       {
@@ -53,6 +60,13 @@ export class NavbarComponent implements OnInit {
         routerLink: 'profile',
         routerLinkActiveOptions: { exact: true }
       },
+      {
+        label: 'Buscar',
+        icon: 'pi pi-fw pi-search',
+        //routerLink: 'search',
+        disabled: true,
+        routerLinkActiveOptions: { exact: true }
+      },
       /* {
         label: 'Salir',
         icon: 'pi pi-fw pi-sign-out',
@@ -60,6 +74,7 @@ export class NavbarComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       }, */
     ];
+    this.isAdmin();
   }
 
   logout() {
@@ -69,6 +84,12 @@ export class NavbarComponent implements OnInit {
       this.overlay = false;
       this.router.navigateByUrl('/auth')
     }, 500);
+  }
+
+  isAdmin() {
+    this.authService.isAdmin().then((res) => {
+      if (res) this.admin = res;
+    });
   }
 }
 

@@ -4,12 +4,15 @@
       <img src="assets/isologo.png" height="50" class="mr-2">
     </ng-template>
     <ng-template pTemplate="end">
-      <input type="text" pInputText placeholder="Buscar cursos" class="hide-sm">
-      <button pButton class="ms-3 h-100" label="Salir" icon="pi pi-sign-out" (click)="logout()"></button>
+      <div class="d-flex align-items-center">
+        <!-- <input type="text" pInputText placeholder="Buscar cursos" class="hide-sm"> -->
+        <button *ngIf="admin" pButton class="ms-3 h-100" label="Admin" icon="pi pi-users"></button>
+        <button pButton class="ms-3 h-100" label="Salir" icon="pi pi-sign-out" (click)="logout()"></button>
+      </div>
     </ng-template>
   </p-menubar>
 
   <div [ngClass]="{'overlay': overlay}" [ngStyle]="{'display': overlay ? 'block' : 'none'}">
-    <i class="pi pi-spin pi-spinner" style="font-size: 4rem"></i>
+    <i class="pi pi-spin pi-spinner" style="font-size: 5rem; color: #7349bd"></i>
   </div>
 </div>
