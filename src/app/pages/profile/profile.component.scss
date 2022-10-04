@@ -1,0 +1,65 @@
+.course-banner {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='200' preserveAspectRatio='none' viewBox='0 0 1920 200'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1005%26quot%3b)' fill='none'%3e%3crect width='1920' height='200' x='0' y='0' fill='rgba(167%2c 228%2c 220%2c 0.28)'%3e%3c/rect%3e%3cpath d='M524.16 237.66C663.29 237.52 799.91 166.77 1076.13 166.76 1352.36 166.75 1352.12 191.76 1628.11 191.76 1904.09 191.76 2041.95 166.77 2180.08 166.76' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M537.32 217.63C746.29 216.64 945.44 42.17 1354.57 42.14 1763.71 42.11 1966.17 135.99 2171.83 136.14' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M861.18 215.3C1020.44 213.92 1168.06 52.07 1476.95 51.99 1785.83 51.91 1937.94 115.9 2092.71 115.99' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M258.87 222.44C421.07 221.45 573.17 74.22 890.48 74.07 1207.79 73.92 1206.29 99.07 1522.1 99.07 1837.9 99.07 1995.68 74.07 2153.71 74.07' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M798.75 216.3C898.91 214.87 893.93 95.51 1180.77 95.49 1467.62 95.47 1753.1 161.43 1944.82 161.49' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1005'%3e%3crect width='1920' height='200' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  background-size: cover;
+  width: 100%;
+  height: 200px;
+}
+
+.profile-title {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  transform: translate(0, -50%);
+  letter-spacing: 2px;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  border: 3px solid #fff;
+  width: 200px;
+  background-size: contain;
+}
+
+.exclamation {
+  font-size: 3rem;
+  animation: breathe 2s ease infinite;
+}
+
+.basic-info {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .p-inputgroup {
+      width: 100%;
+    }
+
+    .p-inputgroup .p-inputtext {
+      width: 100% !important;
+    }
+
+    .p-inputgroup:nth-child(2) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+::ng-deep input#withoutgrouping {
+  width: 100%;
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

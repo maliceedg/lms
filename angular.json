@@ -31,8 +31,8 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/mdc-light-deeppurple/theme.css",
               "src/app/shared/bootstrap/bootstrap.min.css",
+              "node_modules/primeng/resources/themes/mdc-light-deeppurple/theme.css",
               "node_modules/primeicons/primeicons.css",
               "src/app/shared/styles/styles.scss"
             ],
@@ -43,13 +43,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 }
               ],
               "fileReplacements": [
@@ -110,5 +110,7 @@
       }
     }
   },
-  "defaultProject": "lms"
+  "cli": {
+    "analytics": false
+  }
 }

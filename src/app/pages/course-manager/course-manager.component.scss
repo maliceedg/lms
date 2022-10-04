@@ -1,0 +1,91 @@
+@import "../../shared/styles/_variables.scss";
+
+.banner {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='200' preserveAspectRatio='none' viewBox='0 0 1920 200'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1006%26quot%3b)' fill='none'%3e%3crect width='1920' height='200' x='0' y='0' fill='rgba(167%2c 228%2c 220%2c 0.28)'%3e%3c/rect%3e%3cpath d='M594.97 237.47C788.72 236.84 975.32 93.41 1356.47 93.39 1737.63 93.37 1926.71 167.3 2117.98 167.39' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M762.35 209.13C894.46 206.61 885.63 34.17 1261.03 34.05 1636.43 33.93 2008.78 80.04 2258.39 80.05' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M1014.87 212.89C1123.02 212.43 1118.57 125.28 1438.46 125.02 1758.36 124.76 2073.29 63.06 2285.65 63.02' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M470.96 225.45C666.85 224.92 856.18 88.8 1242.52 88.77 1628.85 88.74 1820.71 142.74 2014.07 142.77' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M1104.5 232.86C1194.85 232.01 1188.81 138.18 1453.18 137.76 1717.55 137.34 1975.56 77.82 2150.54 77.76' stroke='rgba(168%2c 127%2c 185%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1006'%3e%3crect width='1920' height='200' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  background-size: cover;
+  height: 200px;
+  width: 100%;
+}
+
+.course-title {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  transform: translate(0, -50%);
+  letter-spacing: 2px;
+}
+
+.button-group {
+  border: 1px solid #777;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .button-selector {
+    background-color: #673ab7;
+    color: #fff;
+    border: 0;
+    padding: 0.8em;
+    transition: all 0.2s ease;
+
+    &:first-child {
+      border-right: 1px solid #999;
+    }
+  }
+
+  .button-selector.disabled {
+    background-color: #ddd;
+    color: #999;
+  }
+}
+
+.course-content {
+  min-width: calc(100% - 200px);
+
+  @media screen and (max-width: $sm) {
+    width: 100% !important;
+  }
+}
+
+.course-card {
+  img {
+    width: 200px;
+    height: auto;
+
+    @media screen and (max-width: $sm) {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+  }
+}
+
+.category-selector:last-child {
+  @media screen and (max-width: 768px) {
+    margin-top: 1rem;
+  }
+}
+
+.lesson-media {
+  width: 50%;
+
+  input {
+    width: 80%;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-top: 100%;
+  }
+}
+
+::ng-deep .p-button {
+  border-radius: 0;
+}
+
+::ng-deep .p-hidden-accessible {
+  display: none;
+}
+
+:host ::ng-deep .p-dropdown {
+  min-width: 5rem;
+  width: 20rem;
+}

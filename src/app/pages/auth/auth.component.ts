@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -9,15 +10,16 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class AuthComponent implements OnInit {
 
   user = {
-    email: '',
-    password: ''
+    email: 'maliceedg@gmail.com',
+    password: 'Maliceedg12++'
   }
   viewValue: string = 'login';
   passwordValue: string = '';
   samePass: boolean = true;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router 
   ) { }
 
   ngOnInit(): void {
@@ -42,8 +44,11 @@ export class AuthComponent implements OnInit {
 
   login() {
     const { email, password } = this.user;
-    this.authService.login(email, password).then(res => {
-    })
+    this.authService.login(email, password).then((res: any) => {
+      if (this.authService.checkToken()) {
+        this.router.navigateByUrl('courses');
+      }
+    });
   }
 
   register() {
@@ -55,6 +60,9 @@ export class AuthComponent implements OnInit {
   googleLogin() {
     const { email, password } = this.user;
     this.authService.googleLogin(email, password).then(res => {
+      if (this.authService.checkToken()) {
+        this.router.navigateByUrl('courses');
+      }
     })
   }
 

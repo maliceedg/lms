@@ -65,3 +65,38 @@
         display: none;
     }
 }
+
+/* Utilities */
+
+/* Text */
+.text-base {
+    color: #aaa !important;
+}
+
+.text-primary {
+    color: #a7e4dc !important;
+}
+
+.text-accent {
+    color: #6f44bb !important;
+}
+
+.bg-primary {
+    background-color: #a7e4dc !important;
+}
+
+.bg-accent {
+    background-color: #6f44bb !important;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 80%;
+}
+
+/* Background */
+.bg-gray {
+    background-color: #e7e7e7;
+}

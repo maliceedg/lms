@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,33 +11,65 @@ import { MenuItem } from 'primeng/api';
 export class NavbarComponent implements OnInit {
 
   items: MenuItem[] = [];
-  constructor() { }
+  overlay: boolean = false;
+  url: string = '';
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.url = event.url;
+      };
+    })
+  }
 
   ngOnInit(): void {
     this.items = [
       {
-        label: 'File',
-        items: [{
-          label: 'New',
-          icon: 'pi pi-fw pi-plus',
-          items: [
-            { label: 'Project' },
-            { label: 'Other' },
-          ]
-        },
-        { label: 'Open' },
-        { label: 'Quit' }
+        label: 'Cursos',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'courses',
+        routerLinkActiveOptions: { exact: true },
+        items: [
+          {
+            label: 'Administrador de Cursos',
+            icon: 'pi pi-fw pi-cog',
+            routerLink: 'course-manager',
+            routerLinkActiveOptions: { exact: true }
+          }
         ]
       },
       {
-        label: 'Edit',
-        icon: 'pi pi-fw pi-pencil',
-        items: [
-          { label: 'Delete', icon: 'pi pi-fw pi-trash' },
-          { label: 'Refresh', icon: 'pi pi-fw pi-refresh' }
-        ]
-      }
+        label: 'Mis Cursos',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'my-courses',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        label: 'Perfil',
+        icon: 'pi pi-fw pi-user',
+        routerLink: 'profile',
+        routerLinkActiveOptions: { exact: true }
+      },
+      /* {
+        label: 'Salir',
+        icon: 'pi pi-fw pi-sign-out',
+        routerLink: 'profile',
+        routerLinkActiveOptions: { exact: true }
+      }, */
     ];
   }
 
+  logout() {
+    this.authService.logout();
+    this.overlay = true;
+    setTimeout(() => {
+      this.overlay = false;
+      this.router.navigateByUrl('/auth')
+    }, 500);
+  }
 }
+
+

@@ -1,0 +1,22 @@
+<div *ngFor="let lesson of lessons; let i = index" class="mt-2 d-flex justify-content-between align-items-end">
+
+  <div class="d-flex flex-wrap justify-content-between w-100">
+    <div class="d-flex flex-column lesson-media">
+      <h5>Nombre de la lección {{i + 1}}</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+        <input type="text" [(ngModel)]="lesson.name" (ngModelChange)="editLesson()" pInputText
+          placeholder="Ej. Derivadas simples">
+      </div>
+    </div>
+
+    <div class="d-flex flex-column lesson-media">
+      <h5>URL de la lección {{i + 1}}</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <span class="p-inputgroup-addon"><i class="pi pi-link"></i></span>
+        <input type="text" [(ngModel)]="lesson.url" (ngModelChange)="editLesson()" pInputText
+          placeholder="Ej. https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,15 @@
-<p-menubar [model]="items"></p-menubar>
+<div *ngIf="url != '/auth'">
+  <p-menubar [model]="items">
+    <ng-template pTemplate="start">
+      <img src="assets/isologo.png" height="50" class="mr-2">
+    </ng-template>
+    <ng-template pTemplate="end">
+      <input type="text" pInputText placeholder="Buscar cursos" class="hide-sm">
+      <button pButton class="ms-3 h-100" label="Salir" icon="pi pi-sign-out" (click)="logout()"></button>
+    </ng-template>
+  </p-menubar>
+
+  <div [ngClass]="{'overlay': overlay}" [ngStyle]="{'display': overlay ? 'block' : 'none'}">
+    <i class="pi pi-spin pi-spinner" style="font-size: 4rem"></i>
+  </div>
+</div>
