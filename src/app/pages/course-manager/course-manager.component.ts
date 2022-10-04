@@ -80,6 +80,7 @@ export class CourseManagerComponent implements OnInit {
     });
 
     this.editCourseForm = this.formBuilder.group({
+      id: '',
       author: '',
       category: '',
       description: '',
@@ -130,7 +131,7 @@ export class CourseManagerComponent implements OnInit {
     setTimeout(() => {
       if (this.courses.length <= 0) this.noCourses = true;
     }, 100);
-    this.loading = false;
+    this.loading = false;    
   }
 
   /* Course */
@@ -175,19 +176,10 @@ export class CourseManagerComponent implements OnInit {
       userID: this.id,
       photoURL: this.imageUrl
     });
-
     this.crudService.uploadCourse(this.courseForm.value);
   }
 
-  async updateCourse(name: string) {
-    let id = '';
-    const batch = writeBatch(this.crudService.db);
-    const q = query(collection(this.crudService.db, "courses"), where("name", "==", name));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      id = doc.id;
-    });
-
+  async updateCourse(id: string) {
     const docData = {
       category: this.editCourseForm.value.category,
       description: this.editCourseForm.value.description,
@@ -197,7 +189,6 @@ export class CourseManagerComponent implements OnInit {
       photoURL: this.editCourseForm.value.photoURL,
       price: this.editCourseForm.value.price
     }
-    
     this.crudService.updateCourse(this.editCourseForm.value, id);
   }
 
