@@ -4,7 +4,7 @@ import { getFirestore, doc, setDoc, updateDoc, collection, addDoc } from 'fireba
 import { environment } from 'src/environments/environment';
 import { getDatabase, ref, set } from "firebase/database";
 
-export interface Course { author: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL:string, price: number, rating: number, userID: string }
+export interface Course { id?: string, author: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL:string, price: number, rating: number, userID: string }
 export interface SalesOrder { authorId: string, courseId: string, courseName: string, date: string, price: number, userID: string }
 
 @Injectable({
@@ -36,7 +36,9 @@ export class CrudService {
   }
 
   async updateCourse(course: Course, id: string) {
-    const docRef = doc(this.db, "courses", id.toString());
+    const docRef = doc(this.db, "courses", id);
+    console.log('course ', course);
+    
     await updateDoc(docRef, {
       author: course.author,
       category: course.category,
@@ -50,7 +52,7 @@ export class CrudService {
       rating: course.rating,
       userID: course.userID
     }).then(res => {
-      console.log(res);      
+      // display message service
     });
   }
 
