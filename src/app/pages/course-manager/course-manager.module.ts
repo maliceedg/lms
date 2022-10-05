@@ -10,6 +10,8 @@ import { EditLessonsComponent } from 'src/app/components/edit-lessons/edit-lesso
 // Firebase
 import { AngularFireModule } from "@angular/fire/compat";
 import { environment } from 'src/environments/environment';
+import { AlertsService } from 'src/app/shared/services/alerts.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const routes: Routes = [
   { path: '', component: CourseManagerComponent, pathMatch: 'full' },
@@ -35,6 +37,7 @@ export const routes: Routes = [
       measurementId: "G-4B52LWEE09"
     }),
     ReactiveFormsModule
-  ]
+  ],
+  providers: [AlertsService, ConfirmationService, MessageService]
 })
 export class CourseManagerModule { }

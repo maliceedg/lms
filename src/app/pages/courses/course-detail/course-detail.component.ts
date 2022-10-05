@@ -78,6 +78,7 @@ export class CourseDetailComponent implements OnInit {
             if (details.status == 'COMPLETED') {
               this.buyCourse();
               this.isBought();
+              this.display = false;
             }
           }
         }

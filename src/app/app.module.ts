@@ -5,7 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+
+import { AlertsService } from "./shared/services/alerts.service";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { MessagesService } from './shared/services/message.service';
 
 // Firebase
 import { AngularFireModule } from "@angular/fire/compat";
@@ -55,7 +58,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [CrudService],
+  providers: [CrudService, AlertsService, ConfirmationService, MessageService, MessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

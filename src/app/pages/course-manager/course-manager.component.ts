@@ -190,6 +190,7 @@ export class CourseManagerComponent implements OnInit {
       price: this.editCourseForm.value.price
     }
     this.crudService.updateCourse(this.editCourseForm.value, id);
+    this.display = false;
   }
 
   showDialog(course: any) {

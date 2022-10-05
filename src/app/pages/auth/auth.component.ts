@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertsService } from 'src/app/shared/services/alerts.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -19,10 +20,12 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router 
+    private router: Router,
+    private alertsService: AlertsService
   ) { }
 
   ngOnInit(): void {
+    this.alert();
   }
 
   view(value: string) {
@@ -71,6 +74,10 @@ export class AuthComponent implements OnInit {
     this.authService.getLoggedUser().subscribe(res => {
       console.log(res?.email);
     });
+  }
+
+  alert() {    
+    this.alertsService.addAlert({ severity: "success", title: "Operación exitosa", message: "Usuario logeado exitosamente", life: 3000 });
   }
 
 }
