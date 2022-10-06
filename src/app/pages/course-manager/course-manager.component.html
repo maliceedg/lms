@@ -53,8 +53,8 @@
           <div *ngIf="course.photoURL == ''">
             <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
           </div>
-          <div *ngIf="images[i]">
-            <img class="course-img" [src]="images[i]" alt="Portada del curso">
+          <div *ngIf="course.photoURL != ''">
+            <img class="course-img" [src]="course.photoURL" alt="Portada del curso">
           </div>
           <div class="p-3 course-content">
             <span class="text-base">

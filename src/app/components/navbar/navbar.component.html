@@ -6,7 +6,7 @@
     <ng-template pTemplate="end">
       <div class="d-flex align-items-center">
         <!-- <input type="text" pInputText placeholder="Buscar cursos" class="hide-sm"> -->
-        <button *ngIf="admin" pButton class="ms-3 h-100" label="Admin" icon="pi pi-users"></button>
+        <button *ngIf="admin" pButton class="ms-3 h-100" label="Admin" icon="pi pi-users" routerLink="/admin"></button>
         <button pButton class="ms-3 h-100" label="Salir" icon="pi pi-sign-out" (click)="logout()"></button>
       </div>
     </ng-template>

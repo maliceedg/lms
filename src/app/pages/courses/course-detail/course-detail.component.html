@@ -40,7 +40,7 @@
           <img class="img-placeholder rounded shadow" src="../../../assets/video-placeholder.png" alt="Portada del curso">
         </div>
         <div *ngIf="course.photoURL != ''">
-          <img class="course-img rounded shadow" [src]="images[0]" alt="Portada del curso">
+          <img class="course-img rounded shadow" [src]="course.photoURL" alt="Portada del curso">
         </div>
       </div>
       <!-- Course Details -->

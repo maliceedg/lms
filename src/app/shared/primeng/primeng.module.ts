@@ -10,6 +10,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
 import { DialogModule } from 'primeng/dialog';
+import { TooltipModule } from 'primeng/tooltip';
 import { DividerModule } from 'primeng/divider';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
@@ -21,6 +22,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 const modules = [
   TreeModule,
@@ -31,6 +33,7 @@ const modules = [
   RatingModule,
   ButtonModule,
   RippleModule,
+  TooltipModule,
   DividerModule,
   MenubarModule,
   TabViewModule,
@@ -41,7 +44,8 @@ const modules = [
   InputTextModule,
   FileUploadModule,
   InputNumberModule,
-  MultiSelectModule
+  MultiSelectModule,
+  ToggleButtonModule,
 ]
 
 @NgModule({

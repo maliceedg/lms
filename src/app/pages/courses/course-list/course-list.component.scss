@@ -31,12 +31,21 @@
   letter-spacing: 2px;
 }
 
+.course-grouper {
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: $sm) {
+    flex-wrap: wrap;
+  }
+}
+
 .course-list {
   background-color: #e7e7e7;
+  min-height: calc(100vh - 276px);
 }
 
 .course-content {
-  width: 60%;
+  width: 100%;
 
   @media screen and (max-width: $sm) {
     width: 100% !important;

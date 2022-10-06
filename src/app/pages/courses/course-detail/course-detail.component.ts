@@ -52,7 +52,7 @@ export class CourseDetailComponent implements OnInit {
     const docSnap = await getDoc(docRef);
     this.course = docSnap.data();
 
-    this.getCourseImage(this.course.photoURL);
+    //this.getCourseImage(this.course.photoURL);
     this.loading = false;
   }
 
@@ -96,23 +96,6 @@ export class CourseDetailComponent implements OnInit {
       userID: this.authService.getUserId()
     }
     this.crudService.buyCourse(this.saleOrder);
-  }
-
-  getCourseImage(photoURL: string) {
-    setTimeout(() => {
-      if (photoURL != '') {
-        getDownloadURL(ref(this.storage, photoURL))
-          .then((url) => {
-            // `url` is the download URL for 'images/stars.jpg'            
-            this.images.push(url);     
-          })
-          .catch((error) => {
-            // Handle any errors
-          });
-      } else if (photoURL == '') {
-        this.images.push('');
-      }
-    }, 100);
   }
 
   async isBought() {

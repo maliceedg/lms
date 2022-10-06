@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, update } from "firebase/database";
 
-export interface Course { id?: string, author: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL:string, price: number, rating: number, userID: string }
+export interface Course { id?: string, author: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL: string, price: number, rating: number, userID: string }
 export interface SalesOrder { authorId: string, courseId: string, courseName: string, date: string, price: number, userID: string }
 
 @Injectable({
@@ -46,7 +46,7 @@ export class CrudService {
   async updateCourse(course: Course, id: string) {
     const docRef = doc(this.db, "courses", id);
     console.log('course ', course);
-    
+
     await updateDoc(docRef, {
       author: course.author,
       category: course.category,
@@ -62,6 +62,20 @@ export class CrudService {
     }).then(res => {
       // display message service
     });
+  }
+
+  async updateStatus(id: string, status: boolean) {
+    const docRef = doc(this.db, "courses", id);
+
+    if (status) {
+      await updateDoc(docRef, { active: false }).then(res => {
+        alert('Curso deshabilitado exitosamente')
+      });
+    } else if (!status) {
+      await updateDoc(docRef, { active: true }).then(res => {
+        alert('Curso habilitado exitosamente')
+      });
+    }
   }
 
   async buyCourse(saleOrder: SalesOrder) {

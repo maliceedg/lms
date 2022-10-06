@@ -62,21 +62,17 @@ export class CourseListComponent implements OnInit {
 
   async getCourses() {
     this.courses = [];
-    this.images = [];
 
-    let i: number = 0;
+    const q = query(collection(this.crudService.db, "courses"), where("active", "==", true));
 
-    const querySnapshot = await getDocs(collection(this.crudService.db, "courses"));
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
       this.courses.push({
         id: doc.id,
-        photoURL: this.getCourseImage(doc.data()['photoURL'], i),
         ...doc.data()
       });
-      i++;
     });
-    console.log(this.courses);
-    
     this.loading = false;
   }
 

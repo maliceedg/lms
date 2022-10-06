@@ -45,8 +45,13 @@
 
           <ng-template let-courses pTemplate="listItem" style="background: transparent;">
             <!-- List template -->
-            <div class="rounded shadow bg-white d-flex overflow-hidden flex-wrap mb-4 w-100">
-              <img class="course-img" [src]="courses.img + '?' + courses.id" alt="">
+            <div class="rounded shadow bg-white d-flex overflow-hidden mb-4 w-100 course-grouper">
+              <div *ngIf="courses.photoURL == ''">
+                <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
+              </div>
+              <div *ngIf="courses.photoURL != ''">
+                <img class="course-img" [src]="courses.photoURL" alt="Portada del curso">
+              </div>
               <div class="p-3 course-content">
                 <span class="text-base">
                   {{courses?.category}}
@@ -89,7 +94,12 @@
             style="background: transparent; display: flex; flex-wrap: wrap; justify-content: space-evenly;">
             <!-- Grid template -->
             <div class="bg-white rounded shadow overflow-hidden mb-3 grid-card">
-              <img style="width: 100%;" [src]="courses.img + '?' + courses.id" alt="">
+              <div *ngIf="courses.photoURL == ''">
+                <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
+              </div>
+              <div *ngIf="courses.photoURL != ''">
+                <img class="course-img" [src]="courses.photoURL" alt="Portada del curso">
+              </div>
               <div class="p-3 d-flex flex-column justify-content-between grid-card-content">
                 <div>
                   <span class="text-base">
@@ -117,7 +127,7 @@
 
                   <!-- Teacher -->
                   <div class="d-flex align-items-center">
-                    <span class="fw-bold" style="font-size: .95rem;">Por {{courses.teacher}}</span>
+                    <span class="fw-bold" style="font-size: .95rem;">Por {{courses.author}}</span>
                   </div>
 
                   <a [routerLink]="'/courses/detail/' + courses.id">

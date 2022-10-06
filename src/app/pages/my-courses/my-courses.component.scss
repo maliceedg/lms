@@ -30,13 +30,21 @@
   letter-spacing: 2px;
 }
 
+.course-grouper {
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: $sm) {
+    flex-wrap: wrap;
+  }
+}
+
 .course-list {
   background-color: #e7e7e7;
   min-height: calc(100vh - 276px);
 }
 
 .course-content {
-  width: 60%;
+  width: 100%;
 
   @media screen and (max-width: $sm) {
     width: 100% !important;
@@ -75,7 +83,9 @@
 }
 
 .course-img {
-  width: 270px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
   background: radial-gradient(transparent, rgba(0, 0, 0, 0.4));
 
   @media screen and (max-width: $sm) {
