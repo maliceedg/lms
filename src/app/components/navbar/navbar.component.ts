@@ -88,7 +88,7 @@ export class NavbarComponent implements OnInit {
 
   isAdmin() {
     this.authService.isAdmin().then((res) => {
-      if (res) this.admin = res;
+      if (res) this.admin = res;      
     });
   }
 }

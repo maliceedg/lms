@@ -28,6 +28,7 @@ import { CoursePlayerComponent } from './pages/course-player/course-player.compo
 import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     CoursePlayerComponent,
     MyCoursesComponent,
     FileUploadComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
