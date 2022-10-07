@@ -122,7 +122,7 @@ export class AuthService {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       id = doc.data()['userID'];
-    });    
+    });
     
     return true ? (id == this.getUser().id) : false;
   }

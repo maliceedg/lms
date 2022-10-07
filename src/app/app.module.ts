@@ -29,6 +29,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { CrudService } from './shared/services/crud.service';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { NotificationComponent } from './pages/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     MyCoursesComponent,
     FileUploadComponent,
     AdminComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { getDatabase, ref, set, update } from "firebase/database";
 
 export interface Course { id?: string, author: string, authorEmail: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL: string, price: number, rating: number, userID: string }
 export interface SalesOrder { authorId: string, courseId: string, courseName: string, date: string, price: number, userID: string }
+export interface Message { recipientName: string, recipientEmail: string, createdAt: Date, senderName: string, senderEmail: string, subject: string, message: string }
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,21 @@ export class CrudService {
       date: saleOrder.date,
       price: saleOrder.price,
       userID: saleOrder.userID,
+    })
+  }
+
+  async sendMessage(message: Message) {
+    const docRef = await addDoc(collection(this.db, 'messages'), {
+      recipientName: message.recipientName,
+      recipientEmail: message.recipientEmail,
+      senderName: message.senderName,
+      senderEmail: message.senderEmail,
+      subject: message.subject,
+      message: message.message,
+      createdAt: message.createdAt,
+      read: false
+    }).then(() => {
+      alert('Mensaje enviado exitosamente')
     })
   }
 }

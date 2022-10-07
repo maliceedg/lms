@@ -1,0 +1,124 @@
+<div class="relative notification-banner">
+  <h1 class="notification-title fw-bold">
+    Mis notificaciones
+  </h1>
+</div>
+
+<div class="notification-list">
+  <div class="container px-2 py-4 d-flex justify-content-between flex-wrap">
+    <!-- Skeleton -->
+    <div *ngIf="loading" class="w-100 mt-5">
+      <div *ngFor="let skeleton of [0,1,2,3,4,5]">
+        <div class="w-100 mb-4">
+          <div class="w-100 d-flex">
+            <div>
+              <p-skeleton width="270px" height="170px"></p-skeleton>
+            </div>
+            <div class="d-flex flex-column ms-3 mt-3 w-100">
+              <div class="w-100">
+                <p-skeleton width="8rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="15rem" height="1.5rem" styleClass="mb-4"></p-skeleton>
+                <div class="d-flex mb-2">
+                  <p-skeleton width="10rem" styleClass=""></p-skeleton>
+                  <p-skeleton width="4rem" styleClass="ms-2"></p-skeleton>
+                  <p-skeleton width="10rem" styleClass="ms-2"></p-skeleton>
+                </div>
+              </div>
+              <div class="flex justify-content-between mt-3">
+                <p-skeleton width="80%" height="2rem"></p-skeleton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading" class="w-100 px-5">
+
+      <p-dataView [value]="notifications" [paginator]="true" [rows]="10" filterBy="name">
+
+        <ng-template let-notifications let-i="index" pTemplate="listItem" style="background: transparent;">
+          <div class="card w-100 px-4 py-3 shadow-sm mb-3">
+            <div class="d-flex">
+              <div>
+                <div class="profile-letter-container d-flex justify-content-center align-items-center">
+                  <span class="fs-1 fw-bold profile-letter">
+                    {{notifications?.senderName | slice:0:1}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center w-100">
+                <div class="d-flex flex-column ms-3 px-3 w-100">
+
+                  <div class="mb-2 d-flex justify-content-between w-100">
+                    <span class="fs-2">{{notifications?.subject}}</span>
+                    <button pButton pRipple type="button" icon="pi pi-reply" label="{{notifications?.recipientName}}"
+                      class="p-button-outlined p-button-rounded"
+                      (click)="replyMessage(notifications?.recipientName, notifications?.recipientEmail); display=true"></button>
+                  </div>
+                  <span>{{notifications?.message}}</span>
+
+                  <div class="d-flex flex-wrap mt-3 justify-content-between w-100 align-items-center">
+                    <span class="fw-bold text-justify">{{notifications?.createdAt | date: 'short'}}</span>
+                    <div class="d-flex flex-wrap ms-2">
+                      <i>Enviador por </i>
+                      <span class="fw-bold ms-2">{{notifications?.senderName}}</span>
+                      <span class="fw-bold ms-1">{{notifications?.senderEmail}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
+  </div>
+</div>
+
+<!-- Message Dialog -->
+<p-dialog header="Responder mensaje" [(visible)]="display" [modal]="true" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+
+  <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+
+    <div class="input-group d-flex justify-content-between flex-wrap">
+      <div class="d-flex flex-column mt-3">
+        <h5>Tu nombre</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" formControlName="senderName" pInputText placeholder="John Doe">
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <h5>Tu correo</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+          <input type="text" formControlName="senderEmail" pInputText placeholder="johndoe@example.com">
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3">
+      <h5>Asunto</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <span class="p-inputgroup-addon"><i class="pi pi-comment"></i></span>
+        <input type="text" formControlName="subject" pInputText placeholder="Discusión del curso" class="w-100">
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3">
+      <h5>Mensaje</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <textarea rows="5" cols="30" formControlName="message" pInputTextarea class="w-100"></textarea>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" type="button" (click)="sendMessage();" label="Enviar"
+      styleClass="p-button p-button-success"></p-button>
+  </ng-template>
+</p-dialog>
