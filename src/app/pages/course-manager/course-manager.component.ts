@@ -215,7 +215,6 @@ export class CourseManagerComponent implements OnInit {
     const storageRef = ref(this.storage, ('images/courses/' + this.getRandomId() + '.' + file.name.split('.').pop()));
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-
     // 'file' comes from the Blob or File API
     /* uploadBytes(storageRef, file).then((snapshot) => {
       this.imageUrl = snapshot.metadata.fullPath;
