@@ -56,6 +56,10 @@ export class MyCoursesComponent implements OnInit {
     const docu = await getDoc(docRef);
 
     this.courses.push(docu.data());
+    this.courses.map(el => ({
+      ...el,
+      ['id']: el.id = documentId
+    }))
     console.log(this.courses);
   }
 
