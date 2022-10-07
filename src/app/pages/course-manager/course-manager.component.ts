@@ -38,6 +38,7 @@ export class CourseManagerComponent implements OnInit {
   courseForm: FormGroup;
   editCourseForm: FormGroup;
   author: string;
+  email: string;
 
   public imageUrl: string;
   courseCover: string;
@@ -57,6 +58,7 @@ export class CourseManagerComponent implements OnInit {
   ) {
     this.courseForm = this.formBuilder.group({
       author: this.author,
+      authorEmail: this.email,
       category: '',
       description: '',
       lessons: this.formBuilder.array([]),
@@ -74,6 +76,7 @@ export class CourseManagerComponent implements OnInit {
     this.authService.getLoggedUser().subscribe((user: any) => {
       if (user) {
         this.author = user.displayName;
+        this.email = user.email;
         this.id = user.uid;
 
         this.getCourses();
@@ -83,6 +86,7 @@ export class CourseManagerComponent implements OnInit {
     this.editCourseForm = this.formBuilder.group({
       id: '',
       author: '',
+      authorEmail: '',
       category: '',
       description: '',
       lessons: [],
@@ -182,6 +186,7 @@ export class CourseManagerComponent implements OnInit {
 
   async updateCourse(id: string) {
     const docData = {
+      author: this.authService.getUser().name,
       category: this.editCourseForm.value.category,
       description: this.editCourseForm.value.description,
       lessons: this.editCourseForm.value.lessons,
@@ -190,6 +195,11 @@ export class CourseManagerComponent implements OnInit {
       photoURL: this.editCourseForm.value.photoURL,
       price: this.editCourseForm.value.price
     }
+    this.editCourseForm.patchValue({      
+      author: this.authService.getUser().name,
+      authorEmail: this.authService.getUser().email
+    })
+    console.log(this.editCourseForm.value);
     this.crudService.updateCourse(this.editCourseForm.value, id);
     this.display = false;
   }

@@ -18,17 +18,17 @@ import { PrimengModule } from './shared/primeng/primeng.module';
 
 // Pages
 import { AuthComponent } from './pages/auth/auth.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { CoursePlayerComponent } from './pages/course-player/course-player.component';
 
 // Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ProfileComponent } from './pages/profile/profile.component';
 import { CrudService } from './shared/services/crud.service';
-import { CoursePlayerComponent } from './pages/course-player/course-player.component';
-import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
