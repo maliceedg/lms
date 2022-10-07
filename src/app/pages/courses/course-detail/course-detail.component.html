@@ -37,10 +37,11 @@
       <!-- Course Img -->
       <div class="col-md-4 col-sm-12 d-flex align-items-center">
         <div *ngIf="course.photoURL == ''" class="m-auto">
-          <img class="img-placeholder rounded shadow" src="../../../assets/video-placeholder.png" alt="Portada del curso">
+          <img class="img-placeholder rounded shadow m-auto" src="../../../assets/video-placeholder.png"
+            alt="Portada del curso">
         </div>
         <div *ngIf="course.photoURL != ''">
-          <img class="course-img rounded shadow" [src]="course.photoURL" alt="Portada del curso">
+          <img class="course-img rounded shadow m-auto" [src]="course.photoURL" alt="Portada del curso">
         </div>
       </div>
       <!-- Course Details -->
@@ -59,11 +60,16 @@
               </div>
 
               <i class="fw-bold ms-3">Por {{course?.author | titlecase}}</i>
+              <i class="ms-2">{{course?.authorEmail}}</i>
             </div>
           </div>
 
-          <button *ngIf="!boughtCourse" pButton type="button" label="Comprar Curso" class="mt-2" (click)="showDialog(course?.price)"></button>
-          <button *ngIf="boughtCourse" pButton type="button" label="Has adquirido este curso" [disabled]="true" class="mt-2"></button>
+          <button *ngIf="!boughtCourse" pButton type="button" label="Comprar Curso" class="mt-2"
+            (click)="showDialog(course?.price)"></button>
+          <div *ngIf="boughtCourse" class="d-flex flex-column w-100">
+            <button pButton type="button" label="Hablar con el profesor" class="mt-2" (click)="message=true"></button>
+            <button pButton type="button" label="Has adquirido este curso" [disabled]="true" class="mt-2"></button>
+          </div>
         </div>
       </div>
     </div>
@@ -104,7 +110,7 @@
   </div>
 </div>
 
-
+<!-- Payment Dialog -->
 <p-dialog header="Adquirir un curso" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
   [style]="{width: 'auto'}" [modal]="true">
   <div class="mb-3" style="max-width: 300px;">
@@ -115,4 +121,70 @@
   <ng-template pTemplate="footer">
     <button pButton type="button" label="Cerrar" (click)="display = false"></button>
   </ng-template>
+</p-dialog>
+
+<!-- Message Dialog -->
+<p-dialog header="Enviar mensaje a {{course?.author}}" [(visible)]="message" [modal]="true" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+
+  <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+
+    <!-- <div class="input-group d-flex justify-content-between flex-wrap">
+      <div class="d-flex flex-column mt-3">
+        <h5>Nombre del autor</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" formControlName="authorName" pInputText [disabled]="true">
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <h5>Correo del autor</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+          <input type="text" formControlName="authorEmail" pInputText [disabled]="true">
+        </div>
+      </div>
+    </div> -->
+
+    <div class="input-group d-flex justify-content-between flex-wrap">
+      <div class="d-flex flex-column mt-3">
+        <h5>Tu nombre</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" formControlName="senderName" pInputText placeholder="John Doe">
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-3">
+        <h5>Tu correo</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+          <input type="text" formControlName="senderEmail" pInputText placeholder="johndoe@example.com">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-column mt-3">
+      <h5>Asunto</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <span class="p-inputgroup-addon"><i class="pi pi-comment"></i></span>
+        <input type="text" formControlName="subject" pInputText placeholder="Discusión del curso" class="w-100">
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3">
+      <h5>Mensaje</h5>
+      <div class="p-inputgroup d-flex w-100">
+        <textarea rows="5" cols="30" formControlName="message" pInputTextarea class="w-100"></textarea>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" type="button" (click)="sendMessage();" label="Enviar"
+      styleClass="p-button p-button-success"></p-button>
+  </ng-template>
+
 </p-dialog>

@@ -61,6 +61,12 @@ export class NavbarComponent implements OnInit {
         routerLinkActiveOptions: { exact: true }
       },
       {
+        label: 'Notificaciones',
+        icon: 'pi pi-fw pi-bell',
+        routerLink: 'notifications',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
         label: 'Buscar',
         icon: 'pi pi-fw pi-search',
         //routerLink: 'search',
@@ -80,6 +86,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.overlay = true;
+    localStorage.clear();
     setTimeout(() => {
       this.overlay = false;
       this.router.navigateByUrl('/auth')

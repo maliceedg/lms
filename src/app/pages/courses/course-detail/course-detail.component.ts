@@ -8,6 +8,7 @@ import { render } from "creditcardpayments/creditCardPayments";
 import { formatDate } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SalesOrder } from "../../../shared/services/crud.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-course-detail',
@@ -24,9 +25,12 @@ export class CourseDetailComponent implements OnInit {
   lessonURL: any = '';
   loading: boolean = true;
   display = false;
+  message = false;
   saleOrder: SalesOrder;
   images: any[] = [];
   boughtCourse: boolean = false;
+
+  messageForm: FormGroup;
 
   // Firebase
   storage = getStorage();
@@ -35,11 +39,21 @@ export class CourseDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private crudService: CrudService,
     private authService: AuthService,
-    protected _sanitizer: DomSanitizer) {
+    protected _sanitizer: DomSanitizer,
+    private formBuilder: FormBuilder) {
     this.route.paramMap.subscribe((param: ParamMap) => {
       this.loadCourse(param.get('id'));
       this.id = param.get('id');
     });
+    this.messageForm = this.formBuilder.group({
+      recipientName: '',
+      recipientEmail: '',
+      createdAt: formatDate(new Date(), 'medium', 'en'),
+      senderName: [this.authService.getUser().name, [Validators.required]],
+      senderEmail: [this.authService.getUser().email, [Validators.email, Validators.required]],
+      subject: ['', [Validators.required]],
+      message: ['', [Validators.required]],
+    })
   }
 
   ngOnInit() {
@@ -51,8 +65,6 @@ export class CourseDetailComponent implements OnInit {
     const docRef = doc(this.crudService.db, "courses", id);
     const docSnap = await getDoc(docRef);
     this.course = docSnap.data();
-
-    //this.getCourseImage(this.course.photoURL);
     this.loading = false;
   }
 
@@ -79,6 +91,7 @@ export class CourseDetailComponent implements OnInit {
               this.buyCourse();
               this.isBought();
               this.display = false;
+              alert('Curso adquirido exitosamente');
             }
           }
         }
@@ -109,6 +122,14 @@ export class CourseDetailComponent implements OnInit {
         this.boughtCourse = false;
       }
     });
+  }
+
+  sendMessage() {
+    this.messageForm.patchValue({
+      recipientName: this.course.author,
+      recipientEmail: this.course.authorEmail
+    })    
+    this.crudService.sendMessage(this.messageForm.value);
   }
 
 }

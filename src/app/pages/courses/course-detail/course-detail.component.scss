@@ -135,6 +135,19 @@ img.course-img {
   }
 }
 
+.input-group {
+  width: 100%;
+  div {
+    width: 45%;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  input {
+    width: 100%;
+  }
+}
+
 /* Payments */
 .acquire-course {
   text-overflow: ellipsis;
