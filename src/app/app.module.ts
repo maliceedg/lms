@@ -22,6 +22,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { CoursePlayerComponent } from './pages/course-player/course-player.component';
+import { NotificationComponent } from './pages/notification/notification.component';
+import { CertificatesComponent } from './pages/certificates/certificates.component';
 
 // Components
 import { AppComponent } from './app.component';
@@ -29,7 +31,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { CrudService } from './shared/services/crud.service';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { NotificationComponent } from './pages/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { NotificationComponent } from './pages/notification/notification.compone
     FileUploadComponent,
     AdminComponent,
     NotificationComponent,
+    CertificatesComponent,
   ],
   imports: [
     BrowserModule,

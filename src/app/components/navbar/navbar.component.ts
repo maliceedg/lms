@@ -83,7 +83,6 @@ export class NavbarComponent implements OnInit {
     this.isTeacher();
     setTimeout(() => {
       this.loading = false;
-      console.log(this.loading);      
     }, 100);
   }
 
@@ -109,35 +108,6 @@ export class NavbarComponent implements OnInit {
     this.authService.isTeacher().then((res) => {
       if (res) this.teacher = res;
     });
-  }
-
-  exportCertificate() {
-    import("jspdf").then(jsPDF => {
-      const doc: any = new jsPDF.default({ orientation: 'landscape', unit: "cm" });
-      // Background image 
-      doc.addImage("./assets/certificate-landscape.png", "PNG", null, null, 29.7, 21, "NONE", null);
-      // Title 
-      doc.setFont("times", "italic", "bold");
-      doc.setFontSize(28)
-      doc.text("Certificado de completación", 14.85, 9, null, null, "center");
-
-      // Text 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(16)
-      doc.text("La plataforma Learnerize hace entrega de este certificado a ", 14.85, 12, null, null, "center");
-
-      // User data 
-      doc.setFontSize(24)
-      doc.text(('Edgardo Gonzalez'), 14.85, 13.5, null, null, "center")
-
-      // Participation text 
-      doc.setFontSize(16)
-      doc.text(("Un certificado de completación en "), 14.85, 16, null, null, "center")
-
-      // Group data doc.setFontSize(24) 
-      doc.text(('Curso de Prueba'), 14.85, 17.5, null, null, "center")
-      doc.save('certificado.pdf');
-    })
   }
 }
 

@@ -1,0 +1,41 @@
+<div class="relative certificates-banner">
+  <h1 class="certificates-title fw-bold">
+    Generar certificado
+  </h1>
+</div>
+
+<div class="certificates">
+  <div class="container px-2 py-4 d-flex justify-content-between flex-wrap">
+    <form [formGroup]="certificateForm" class="w-100 card shadow py-3 px-5">
+
+      <div class="d-flex flex-column mb-3">
+        <h5>Nombre del estudiante</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" formControlName="studentName" pInputText class="w-100"
+            placeholder="Ej. Cómo aprender a derivar con estos sencillos métodos">
+        </div>
+      </div>
+
+      <div *ngIf="!loading">
+        <h5>Nombre del curso</h5>
+        <div class="p-inputgroup d-flex w-100">
+          <p-dropdown [options]="names" placeholder="Selecciona un curso" formControlName="courseName" optionLabel="name" optionValue="name"
+            [showClear]="true" [ngClass]="'w-100'"></p-dropdown>
+        </div>
+      </div>
+
+      <div *ngIf="loading">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      </div>
+
+      <div class="w-100 mt-4 d-flex justify-content-center">
+        <button pButton pRipple type="submit" icon="pi pi-check" label="Crear Certificado" 
+          class="rounded p-button-success" (click)="exportCertificate()"></button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<p-toast position="bottom-right"></p-toast>
