@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertsService } from './shared/services/alerts.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'lms';
+
+  constructor(private alertsService: AlertsService) {
+
+  }
+
+  confirm(id?: any) {
+    this.alertsService.confirm(id);
+  }
+
+  reject(id?: any) {
+    this.alertsService.reject(id);
+  }
 }

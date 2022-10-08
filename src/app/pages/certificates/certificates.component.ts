@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { MessageService } from 'primeng/api';
+import { AlertsService } from 'src/app/shared/services/alerts.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CrudService } from 'src/app/shared/services/crud.service';
 
@@ -24,7 +25,8 @@ export class CertificatesComponent implements OnInit {
     private crudService: CrudService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private alertsService: AlertsService,
   ) {
     this.certificateForm = this.formBuilder.group({
       studentName: '',
@@ -84,9 +86,9 @@ export class CertificatesComponent implements OnInit {
         doc.save('Certificado para ' + this.certificateForm.value.studentName + '.pdf');
       });
       
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Certificado creado' });
+      this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Éxito', message: 'Certificado creado' });
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hay campos vacíos' });
+      this.alertsService.addAlert({ position: 'bottom-right', severity: 'error', title: 'Error', message: 'Hay campos vacíos' });
     }
   }
 

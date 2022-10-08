@@ -1,2 +1,28 @@
+<p-toast></p-toast>
+<p-toast key="top-right" position="top-right"></p-toast>
+<p-toast key="top-center" position="top-center"></p-toast>
+<p-toast key="top-left" position="top-left"></p-toast>
+<p-toast key="bottom-left" position="bottom-left"></p-toast>
+<p-toast key="bottom-center" position="bottom-center"></p-toast>
+<p-toast key="bottom-right" position="bottom-right"></p-toast>
+<p-toast key="center" position="center"></p-toast>
+<p-toast position="center" key="confirm">
+    <ng-template let-message pTemplate="message">
+        <div class="d-flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" pButton (click)="confirm(message)" label="Sim"
+                    class="p-button-success m-1"></button>
+                <button type="button" pButton (click)="reject(message)" label="Não"
+                    class="p-button-secondary m-1"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
