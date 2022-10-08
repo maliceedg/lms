@@ -126,4 +126,18 @@ export class AuthService {
     
     return true ? (id == this.getUser().id) : false;
   }
+
+  async isTeacher(): Promise<boolean> {
+    let teacher = [];
+    const q = query(collection(this.crudService.db, "courses"), where("userID", "==", this.getUser().id));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      teacher.push(doc.data());
+    });
+
+    console.log(true ? (teacher.length >= 1) : false);
+    
+    return true ? (teacher.length >= 1) : false;
+  }
 }
