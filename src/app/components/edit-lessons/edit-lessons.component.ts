@@ -18,7 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class EditLessonsComponent implements ControlValueAccessor {
 
   public changed: (value: any) => void;
-  @Input() lessons: { name: string, url: string }[] = [];
+  @Input() lessons: { name: string, url: string, lessonURL: string }[] = [];
 
   constructor() { }
 

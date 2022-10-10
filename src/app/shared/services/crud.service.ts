@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, updateDoc, collection, addDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { getDatabase, ref, set, update } from "firebase/database";
+import { AlertsService } from './alerts.service';
 
 export interface Course { id?: string, author: string, authorEmail: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL: string, price: number, rating: number, userID: string }
 export interface SalesOrder { authorId: string, courseId: string, courseName: string, date: string, price: number, userID: string }
@@ -26,7 +27,9 @@ export class CrudService {
   database = getDatabase();
   coursesRef = collection(this.db, 'courses')
 
-  constructor() { }
+  constructor(
+    private alertsService: AlertsService
+  ) { }
 
   async uploadCourse(course: Course) {
     const docRef = await addDoc(collection(this.db, 'courses'), {
@@ -43,6 +46,8 @@ export class CrudService {
       rating: course.rating,
       userID: course.userID
     })
+    
+    return docRef
   }
 
   async updateCourse(course: Course, id: string) {
@@ -72,11 +77,11 @@ export class CrudService {
 
     if (status) {
       await updateDoc(docRef, { active: false }).then(res => {
-        alert('Curso deshabilitado exitosamente')
+        this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Curso deshabilitado exitosamente' });
       });
     } else if (!status) {
       await updateDoc(docRef, { active: true }).then(res => {
-        alert('Curso habilitado exitosamente')
+        this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Curso habilitado exitosamente' });
       });
     }
   }
@@ -103,7 +108,7 @@ export class CrudService {
       createdAt: message.createdAt,
       read: false
     }).then(() => {
-      alert('Mensaje enviado exitosamente')
+      this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Mensaje enviado exitosamente' });
     })
   }
 }

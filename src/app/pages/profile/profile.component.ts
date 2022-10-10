@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -10,6 +10,7 @@ import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AlertsService } from 'src/app/shared/services/alerts.service';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) { }
@@ -35,25 +36,25 @@ export class ProfileComponent implements OnInit {
   public image;
   imageUrl: string;
   newUser: boolean = true;
-
-  updateInfo = new FormGroup({
-    name: new FormControl(''),
-    phone: new FormControl(''),
-    photoURL: new FormControl('')
-  })
-
+  updateInfo: FormGroup;
+  
   // Firebase
   storage = getStorage();
   profilePic: string;
-
+  
   constructor(
     private authService: AuthService,
-    private messageService: MessageService,
+    private alertsService: AlertsService,
     public afAuth: AngularFireAuth,
-    private crudService: CrudService,
-    private _sanitizer: DomSanitizer,
-    private afStorage: AngularFireStorage
-  ) { }
+    private formBuilder: FormBuilder
+    ) {
+      
+      this.updateInfo = this.formBuilder.group({
+        name: ['', [Validators.required]],
+        phone: ['', [Validators.required]],
+        photoURL: ['', [Validators.required]],
+      })
+  }
 
   ngOnInit() {
     this.getLoggedUser();
@@ -123,6 +124,7 @@ export class ProfileComponent implements OnInit {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           this.profilePic = downloadURL;
+          console.log(this.profilePic);          
         });
       }
     );
@@ -132,8 +134,9 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.authService.UpdateProfile(this.updateInfo.value.name, this.profilePic).then(res => {
       this.loading = false;
-    })
-
+    });
+    this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Usuario actualizado' });
+    this.display = false;
     this.getLoggedUser();
   }
 

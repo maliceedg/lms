@@ -85,10 +85,9 @@ export class CertificatesComponent implements OnInit {
         doc.text((this.certificateForm.value.courseName), 14.85, 17.5, null, null, "center")
         doc.save('Certificado para ' + this.certificateForm.value.studentName + '.pdf');
       });
-      
-      this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Éxito', message: 'Certificado creado' });
+      this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Certificado creado' });
     } else {
-      this.alertsService.addAlert({ position: 'bottom-right', severity: 'error', title: 'Error', message: 'Hay campos vacíos' });
+      this.alertsService.addAlert({ position: 'bottom-right', severity: 'error', title: 'Operación fallida', message: 'Hay campos vacíos' });
     }
   }
 

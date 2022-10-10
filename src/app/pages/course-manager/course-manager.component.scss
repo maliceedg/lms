@@ -75,6 +75,9 @@
       object-fit: cover;
     }
   }
+  @media screen and (max-width: $sm) {
+    flex-wrap: wrap;
+  }
 }
 
 .category-selector:last-child {
@@ -91,7 +94,8 @@
   }
 
   @media screen and (max-width: 768px) {
-    margin-top: 100%;
+    margin-top: 1rem;
+    width: 100% !important;
   }
 }
 
@@ -103,7 +107,10 @@
   display: none;
 }
 
-:host ::ng-deep .p-dropdown {
-  min-width: 5rem;
-  width: 20rem;
+::ng-deep .p-dropdown {
+  width: 100% !important;
+}
+
+::ng-depp .p-placeholder {
+  width: 100% !important;
 }

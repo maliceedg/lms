@@ -18,5 +18,11 @@
           placeholder="Ej. https://www.youtube.com/watch?v=dQw4w9WgXcQ">
       </div>
     </div>
+
+    <div class="d-flex flex-column mt-3">
+      <h5>Archivo de la lección</h5>
+      <input type="file" accept=".pdf,.docx,.pptx" [(ngModel)]="lesson.lessonURL" pInputText class="w-100"
+        (ngModelChange)="editLesson()">
+    </div>
   </div>
 </div>

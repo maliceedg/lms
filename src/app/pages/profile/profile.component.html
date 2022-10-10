@@ -39,10 +39,10 @@
     </div> -->
 
     <form [formGroup]="updateInfo">
-      <div class="d-flex align-items-center basic-info">
+      <div class="align-items-center basic-info input-group">
         <div class="p-inputgroup d-flex">
           <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-          <input type="text" pInputText placeholder="Nombre" formControlName="name">
+          <input type="text" pInputText placeholder="Nombre" formControlName="name" required>
         </div>
 
         <div class="p-inputgroup d-flex">

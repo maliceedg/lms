@@ -66,9 +66,11 @@
 
           <button *ngIf="!boughtCourse" pButton type="button" label="Comprar Curso" class="mt-2"
             (click)="showDialog(course?.price)"></button>
-          <div *ngIf="boughtCourse" class="d-flex flex-column w-100">
-            <button pButton type="button" label="Hablar con el profesor" class="mt-2" (click)="message=true"></button>
-            <button pButton type="button" label="Has adquirido este curso" [disabled]="true" class="mt-2"></button>
+
+          <div *ngIf="boughtCourse" class="d-flex flex-column w-100 h-auto">
+            <button pButton type="button" label="Has adquirido este curso" [disabled]="true" class="p-button-text mb-2"></button>
+            <button pButton type="button" label="Hablar con el profesor" (click)="message=true" class="p-button-outlined mb-2"></button>
+            <button *ngIf="course.hasTest" pButton type="button" label="Hacer test" (click)="showTest()"class="p-button-secondary"></button>
           </div>
         </div>
       </div>
@@ -93,13 +95,20 @@
         <h3 class="fw-bold fs-4 mb-3">Lecciones</h3>
         <div>
           <div *ngFor="let lesson of course?.lessons" class="d-flex flex-column">
-            <div class="d-flex align-items-center justify-content-between">
-              <span class="lesson-title">
-                {{lesson.name}}
-              </span>
-              <div>
-                <button pButton pRipple type="button" icon="pi pi-step-forward"
+            <div class="d-flex flex-column">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="lesson-title">
+                  {{lesson.name}}
+                </span>
+                <div>
+                  <button pButton pRipple type="button" icon="pi pi-step-forward"
                   class="p-button-rounded p-button-outlined ms-2" (click)="getLesson(lesson.url)"></button>
+                </div>
+              </div>
+              <div *ngIf="lesson.lessonURL != '' ">
+                <a [href]="lesson.lessonURL">
+                  Archivo de la lección
+                </a>
               </div>
             </div>
             <p-divider type="dashed"></p-divider>
@@ -123,9 +132,22 @@
   </ng-template>
 </p-dialog>
 
+<!-- Test Dialog -->
+<p-dialog header="Hacer el test" [(visible)]="test" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+  [style]="{width: 'auto'}" [modal]="true">
+
+  <div *ngIf="!loading && course.hastTest">
+    <iframe [src]="testLink" width="640" height="1225" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button pButton type="button" label="Cerrar" (click)="display = false"></button>
+  </ng-template>
+</p-dialog>
+
 <!-- Message Dialog -->
-<p-dialog header="Enviar mensaje a {{course?.author}}" [(visible)]="message" [modal]="true" [breakpoints]="{'960px': '75vw'}"
-  [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+<p-dialog header="Enviar mensaje a {{course?.author}}" [(visible)]="message" [modal]="true"
+  [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
 
   <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
 

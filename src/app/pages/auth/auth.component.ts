@@ -25,7 +25,6 @@ export class AuthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.alert();
   }
 
   view(value: string) {
@@ -36,19 +35,19 @@ export class AuthComponent implements OnInit {
     let password = this.user.password;
     let newPassword = this.passwordValue;
 
-    if(password == newPassword) {
+    if (password == newPassword) {
       this.samePass = true;
     } else {
       this.samePass = false
     }
-    console.log(password, newPassword, this.samePass);
-    
+
   }
 
   login() {
     const { email, password } = this.user;
     this.authService.login(email, password).then((res: any) => {
       if (this.authService.checkToken()) {
+        this.alertsService.addAlert({ severity: "success", title: "Operación exitosa", message: "Usuario logeado exitosamente", life: 3000 });
         this.router.navigateByUrl('courses');
       }
     });
@@ -57,6 +56,7 @@ export class AuthComponent implements OnInit {
   register() {
     const { email, password } = this.user;
     this.authService.register(email, password).then(res => {
+      this.alertsService.addAlert({ severity: "success", title: "Operación exitosa", message: "Usuario registrado exitosamente", life: 3000 });
       this.router.navigateByUrl('courses');
     })
   }
@@ -65,6 +65,7 @@ export class AuthComponent implements OnInit {
     const { email, password } = this.user;
     this.authService.googleLogin(email, password).then(res => {
       if (this.authService.checkToken()) {
+        this.alertsService.addAlert({ severity: "success", title: "Operación exitosa", message: "Usuario logeado exitosamente", life: 3000 });
         this.router.navigateByUrl('courses');
       }
     })
@@ -72,12 +73,7 @@ export class AuthComponent implements OnInit {
 
   getLoggedUser() {
     this.authService.getLoggedUser().subscribe(res => {
-      console.log(res?.email);
     });
-  }
-
-  alert() {    
-    this.alertsService.addAlert({ severity: "success", title: "Operación exitosa", message: "Usuario logeado exitosamente", life: 3000 });
   }
 
 }

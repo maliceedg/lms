@@ -135,8 +135,6 @@ export class AuthService {
     querySnapshot.forEach((doc) => {
       teacher.push(doc.data());
     });
-
-    console.log(true ? (teacher.length >= 1) : false);
     
     return true ? (teacher.length >= 1) : false;
   }

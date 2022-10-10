@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AlertsService } from 'src/app/shared/services/alerts.service';
 
 interface Category {
   name: string,
@@ -42,6 +43,7 @@ export class CourseManagerComponent implements OnInit {
 
   public imageUrl: string;
   courseCover: string;
+  lessonDownloadURL: any[] = [];
 
   display: boolean = false;
   noCourses: boolean = false;
@@ -55,6 +57,7 @@ export class CourseManagerComponent implements OnInit {
     private crudService: CrudService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private alertsService: AlertsService
   ) {
     this.courseForm = this.formBuilder.group({
       author: this.author,
@@ -82,7 +85,6 @@ export class CourseManagerComponent implements OnInit {
         this.getCourses();
       }
     });
-
     this.editCourseForm = this.formBuilder.group({
       id: '',
       author: '',
@@ -98,6 +100,8 @@ export class CourseManagerComponent implements OnInit {
       rating: '',
       userID: ''
     });
+    console.log(this.authService.getUser().email);
+    
   }
 
   viewToggle(window: string) {
@@ -147,7 +151,8 @@ export class CourseManagerComponent implements OnInit {
   newLesson(): FormGroup {
     return this.formBuilder.group({
       name: '',
-      url: ''
+      url: '',
+      lessonURL: ''
     });
   }
 
@@ -163,7 +168,8 @@ export class CourseManagerComponent implements OnInit {
   editNewLesson(): FormGroup {
     return this.formBuilder.group({
       name: '',
-      url: ''
+      url: '',
+      lessonURL: ''
     });
   }
 
@@ -180,8 +186,10 @@ export class CourseManagerComponent implements OnInit {
       author: this.author,
       userID: this.id,
       photoURL: this.courseCover
+    });    
+    this.crudService.uploadCourse(this.courseForm.value).then(() => {
+      this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Curso creado exitosamente' });
     });
-    this.crudService.uploadCourse(this.courseForm.value);
   }
 
   async updateCourse(id: string) {
@@ -258,6 +266,42 @@ export class CourseManagerComponent implements OnInit {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           this.courseCover = downloadURL;
+        });
+      }
+    );
+  }
+
+  onLessonFileSelected(i: number, event) {
+    const file = event.target.files[0];
+    
+    const storageRef = ref(this.storage, ('files/' + this.getRandomId() + '.' + file.name.split('.').pop()));
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on('state_changed',
+      (snapshot) => {
+      },
+      (error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
+
+          // ...
+
+          case 'storage/unknown':
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          this.courseForm.value.lessons[i].lessonURL = downloadURL;
         });
       }
     );

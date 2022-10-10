@@ -46,10 +46,10 @@
           <ng-template let-courses pTemplate="listItem" style="background: transparent;">
             <!-- List template -->
             <div class="rounded shadow bg-white d-flex overflow-hidden mb-4 w-100 course-grouper">
-              <div *ngIf="courses.photoURL == ''">
+              <div *ngIf="courses?.photoURL == ''">
                 <img class="course-img" src="../../../assets/video-placeholder.png" alt="Portada del curso">
               </div>
-              <div *ngIf="courses.photoURL != ''">
+              <div *ngIf="courses?.photoURL != ''">
                 <img class="course-img" [src]="courses.photoURL" alt="Portada del curso">
               </div>
               <div class="p-3 course-content">
@@ -59,7 +59,7 @@
 
                 <!-- Title -->
                 <h4>
-                  {{courses.name}}
+                  {{courses?.name}}
                 </h4>
 
                 <!-- Course details -->
@@ -72,12 +72,12 @@
 
                   <!-- Students -->
                   <div class="d-flex align-items-center ms-3">
-                    <span>{{courses.members}} ests.</span>
+                    <span>{{courses?.members}} ests.</span>
                   </div>
 
                   <!-- Teacher -->
                   <div class="d-flex align-items-center ms-3">
-                    <span class="fw-bold">Por {{courses.author}}</span>
+                    <span class="fw-bold">Por {{courses?.author}}</span>
                   </div>
 
                   <a [routerLink]="'/courses/detail/' + courses?.id" class="w-100">

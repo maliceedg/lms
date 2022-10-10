@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SalesOrder } from "../../../shared/services/crud.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertsService } from 'src/app/shared/services/alerts.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -29,7 +30,9 @@ export class CourseDetailComponent implements OnInit {
   saleOrder: SalesOrder;
   images: any[] = [];
   boughtCourse: boolean = false;
-
+  admin: boolean = false;
+  test: boolean = false;
+  testLink: any;
   messageForm: FormGroup;
 
   // Firebase
@@ -40,7 +43,8 @@ export class CourseDetailComponent implements OnInit {
     private crudService: CrudService,
     private authService: AuthService,
     protected _sanitizer: DomSanitizer,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private alertsService: AlertsService) {
     this.route.paramMap.subscribe((param: ParamMap) => {
       this.loadCourse(param.get('id'));
       this.id = param.get('id');
@@ -59,12 +63,20 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit() {
     this.bg = this.bgGenerator();
     this.isBought();
+    this.isAdmin();
   }
 
   async loadCourse(id: string) {
     const docRef = doc(this.crudService.db, "courses", id);
     const docSnap = await getDoc(docRef);
     this.course = docSnap.data();
+
+    if (this.course.hasTest) {
+      let split = this.course.testLink.split('/view')[0] + 'viewform?embedded=true';
+      this.testLink = this._sanitizer.bypassSecurityTrustResourceUrl(split);
+      console.log(this.testLink);
+    }
+    
     this.loading = false;
   }
 
@@ -75,6 +87,7 @@ export class CourseDetailComponent implements OnInit {
   getLesson(url: string) {
     let split = url.split('https://www.youtube.com/watch?v=')[1];
     this.lessonURL = this._sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + split);
+    console.log(this.lessonURL);
   }
 
   showDialog(price: number) {
@@ -91,7 +104,7 @@ export class CourseDetailComponent implements OnInit {
               this.buyCourse();
               this.isBought();
               this.display = false;
-              alert('Curso adquirido exitosamente');
+              this.alertsService.addAlert({ position: 'bottom-right', severity: 'success', title: 'Operación exitosa', message: 'Curso adquirido exitosamente' });
             }
           }
         }
@@ -116,11 +129,23 @@ export class CourseDetailComponent implements OnInit {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      if (doc.data()['userID'] == this.authService.getUserId() && doc.data()['courseId'] == this.id ) {
+      if (doc.data()['userID'] == this.authService.getUserId() && doc.data()['courseId'] == this.id) {
         this.boughtCourse = true;
-      } else {
+      } else if (doc.data()['userID'] == this.authService.getUserId() && doc.data()['authorID'] == this.authService.getUser().id && doc.data()['courseId'] == this.id) {
+        this.boughtCourse = true;
+      } else if (this.authService.getUserId() == 'SxsocYeCA6Q2JfYPXw1vwXZPDrE2') {
+        this.boughtCourse = true;
+      } else if (doc.data()['userID'] != this.authService.getUserId() && doc.data()['authorID'] != this.authService.getUser().id) {
         this.boughtCourse = false;
       }
+    });
+    console.log(this.boughtCourse);
+
+  }
+
+  isAdmin() {
+    this.authService.isAdmin().then((res) => {
+      if (res) this.admin = res;
     });
   }
 
@@ -128,8 +153,12 @@ export class CourseDetailComponent implements OnInit {
     this.messageForm.patchValue({
       recipientName: this.course.author,
       recipientEmail: this.course.authorEmail
-    })    
+    })
     this.crudService.sendMessage(this.messageForm.value);
+  }
+
+  showTest() {
+    this.test = true;
   }
 
 }
