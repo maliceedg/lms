@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { getDatabase, ref, set, update } from "firebase/database";
 import { AlertsService } from './alerts.service';
 
-export interface Course { id?: string, author: string, authorEmail: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL: string, price: number, rating: number, userID: string }
+export interface Course { id?: string, hasTest: boolean, testLink: string, author: string, authorEmail: string, category: any[], subcategory: string, description: string, lessons: any[], members: number, name: string, photoURL: string, price: number, rating: number, userID: string }
 export interface SalesOrder { authorId: string, courseId: string, courseName: string, date: string, price: number, userID: string }
 export interface Message { recipientName: string, recipientEmail: string, createdAt: Date, senderName: string, senderEmail: string, subject: string, message: string }
 
@@ -56,6 +56,8 @@ export class CrudService {
 
     await updateDoc(docRef, {
       author: course.author,
+      hasTest: course.hasTest,
+      testLink: course.testLink,
       authorEmail: course.authorEmail,
       category: course.category,
       subcategory: course.subcategory,

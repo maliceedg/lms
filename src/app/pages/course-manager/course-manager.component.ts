@@ -87,6 +87,7 @@ export class CourseManagerComponent implements OnInit {
     });
     this.editCourseForm = this.formBuilder.group({
       id: '',
+      hasTest: false,
       author: '',
       authorEmail: '',
       category: '',
@@ -95,6 +96,7 @@ export class CourseManagerComponent implements OnInit {
       members: '',
       name: '',
       subcategory: '',
+      testLink: '',
       photoURL: '',
       price: Number,
       rating: '',
@@ -207,6 +209,11 @@ export class CourseManagerComponent implements OnInit {
       author: this.authService.getUser().name,
       authorEmail: this.authService.getUser().email
     })
+    if (this.editCourseForm.value.testLink != '') {
+      this.editCourseForm.patchValue({      
+        hasTest: true,
+      })
+    }
     console.log(this.editCourseForm.value);
     this.crudService.updateCourse(this.editCourseForm.value, id);
     this.display = false;
